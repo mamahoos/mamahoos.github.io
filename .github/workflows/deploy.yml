@@ -62,8 +62,8 @@ jobs:
         uses: is-cool-me/dnscontrol-action@v4.34.0
         with:
           args: push
-          config_file: dns/dnsconfig.js
-          creds_file: dns/creds.json
+          config_file: .github/dns/dnsconfig.js
+          creds_file: .github/dns/creds.json
 
       - name: Deploy to GitHub Pages
         id: deployment
