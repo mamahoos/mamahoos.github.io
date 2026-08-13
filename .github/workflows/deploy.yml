@@ -3,7 +3,17 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - README.md
+      - docs/**
+      - tasks/**
+      - .vscode/**
   pull_request:
+    paths-ignore:
+      - README.md
+      - docs/**
+      - tasks/**
+      - .vscode/**
   workflow_dispatch:
 
 permissions:
