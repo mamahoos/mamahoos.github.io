@@ -1,0 +1,56 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import { getFeaturedProjects } from "../../lib/projects";
+
+const projects = await getFeaturedProjects();
+---
+
+<Layout
+  title="Projects · mamahoos"
+  description="Selected infrastructure, automation, and software projects."
+>
+  <h1>Projects</h1>
+  <p class="lede">Selected infrastructure, automation, and software work.</p>
+  <ul class="project-list">
+    {
+      projects.map((project) => (
+        <li>
+          <ProjectCard
+            href={`/projects/${project.id}`}
+            index={project.data.order}
+            title={project.data.title}
+            meta={`${project.data.category} · ${project.data.stack[0] ?? project.data.stack.join(", ")}`}
+            summary={project.data.summary}
+          />
+        </li>
+      ))
+    }
+  </ul>
+</Layout>
+
+<style>
+  h1 {
+    margin: 0 0 var(--space-3);
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  .lede {
+    max-width: var(--measure);
+    margin: 0 0 var(--space-4);
+    color: var(--color-muted-foreground);
+  }
+
+  .project-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .project-list li + li {
+    border-top: 1px solid var(--color-line);
+  }
+</style>

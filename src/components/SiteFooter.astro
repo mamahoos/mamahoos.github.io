@@ -1,0 +1,35 @@
+---
+import AsciiSplit from "./AsciiSplit.astro";
+import { site } from "../data/site";
+---
+
+<footer class="site-footer">
+  <AsciiSplit />
+  <p>
+    <a href={`mailto:${site.email}`}>{site.email}</a>
+    <a href={site.github}>GitHub</a>
+    <a href={site.linkedin}>LinkedIn</a>
+    <a href={site.telegram}>Telegram</a>
+  </p>
+</footer>
+
+<style>
+  .site-footer p {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: var(--space-2) var(--space-12);
+    margin: 0;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+  }
+
+  .site-footer a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+  }
+</style>

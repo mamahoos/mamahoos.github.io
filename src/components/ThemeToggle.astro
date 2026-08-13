@@ -1,0 +1,99 @@
+<button
+  type="button"
+  class="theme-toggle"
+  id="theme-toggle"
+  aria-pressed="false"
+  aria-label="Color theme"
+>
+  <span aria-hidden="true">[ </span>Dark<span aria-hidden="true"> ]</span>
+</button>
+
+<script>
+  const storageKey = "theme";
+  const boundFlag = "__themeToggleBound";
+
+  type ThemeRoot = Window & { __themeToggleBound?: boolean };
+
+  function resolveTheme(): "light" | "dark" {
+    const stored = document.documentElement.dataset.theme;
+    if (stored === "light" || stored === "dark") {
+      return stored;
+    }
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  }
+
+  function bracketLabel(label: string): DocumentFragment {
+    const fragment = document.createDocumentFragment();
+    const open = document.createElement("span");
+    open.setAttribute("aria-hidden", "true");
+    open.textContent = "[ ";
+    const close = document.createElement("span");
+    close.setAttribute("aria-hidden", "true");
+    close.textContent = " ]";
+    fragment.append(open, label, close);
+    return fragment;
+  }
+
+  function syncToggle(button: HTMLButtonElement, theme: "light" | "dark") {
+    const isDark = theme === "dark";
+    button.setAttribute("aria-pressed", isDark ? "true" : "false");
+    button.setAttribute(
+      "aria-label",
+      isDark ? "Color theme: dark" : "Color theme: light",
+    );
+    button.replaceChildren(bracketLabel(isDark ? "Dark" : "Light"));
+  }
+
+  function applyTheme(theme: "light" | "dark") {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem(storageKey, theme);
+  }
+
+  const button = document.getElementById("theme-toggle");
+  if (button instanceof HTMLButtonElement) {
+    syncToggle(button, resolveTheme());
+
+    const root = window as ThemeRoot;
+    if (!root[boundFlag]) {
+      root[boundFlag] = true;
+      document.addEventListener("click", (event) => {
+        const target = event.target;
+        if (!(target instanceof Node)) {
+          return;
+        }
+        const toggle = (target instanceof Element ? target : target.parentElement)
+          ?.closest("#theme-toggle");
+        if (!(toggle instanceof HTMLButtonElement)) {
+          return;
+        }
+        const next = resolveTheme() === "dark" ? "light" : "dark";
+        applyTheme(next);
+        syncToggle(toggle, next);
+      });
+    }
+  }
+</script>
+
+<style>
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--color-foreground);
+    cursor: pointer;
+    font: inherit;
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+  }
+
+  .theme-toggle:hover {
+    color: var(--color-accent-hover);
+    text-decoration: underline;
+  }
+</style>

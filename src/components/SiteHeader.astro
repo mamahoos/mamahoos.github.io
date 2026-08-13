@@ -1,0 +1,64 @@
+---
+import ThemeToggle from "./ThemeToggle.astro";
+import { site } from "../data/site";
+
+const path = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <a class="site-header__mark" href="/">{site.handle}</a>
+  <nav aria-label="Primary">
+    <ul>
+      <li>
+        <a
+          class="cmd-link"
+          href="/projects"
+          aria-current={path.startsWith("/projects") ? "page" : undefined}
+        >
+          <span aria-hidden="true">[ </span>Projects<span aria-hidden="true"> ]</span>
+        </a>
+      </li>
+      <li>
+        <a class="cmd-link" href={site.github}>
+          GitHub <span aria-hidden="true">↗</span>
+        </a>
+      </li>
+      <li>
+        <ThemeToggle />
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .site-header__mark {
+    color: var(--color-foreground);
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .site-header__mark:hover {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+
+  nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+</style>
