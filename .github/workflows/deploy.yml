@@ -41,52 +41,19 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Upsert Cloudflare A records for GitHub Pages
+      - name: Checkout
+        if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
+        uses: actions/checkout@v7
+
+      - name: Sync custom domain DNS
+        if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
+        uses: is-cool-me/dnscontrol-action@v4.34.0
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        run: |
-          set -euo pipefail
-          if [ -z "${CLOUDFLARE_API_TOKEN}" ]; then
-            echo "CLOUDFLARE_API_TOKEN is not set; skipping DNS upsert"
-            exit 0
-          fi
-
-          cf() {
-            curl -sS --fail-with-body \
-              -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
-              -H "Content-Type: application/json" \
-              "$@"
-          }
-
-          zone_json=$(cf "https://api.cloudflare.com/client/v4/zones?name=mamahoos.ir")
-          zone_id=$(printf '%s' "${zone_json}" | jq -r '.result[0].id // empty')
-          if [ -z "${zone_id}" ] || [ "${zone_id}" = "null" ]; then
-            echo "Could not find Cloudflare zone mamahoos.ir"
-            printf '%s\n' "${zone_json}"
-            exit 1
-          fi
-
-          records_url="https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records?name=portfolio.mamahoos.ir"
-          records_json=$(cf "${records_url}")
-          printf '%s' "${records_json}" | jq -r '.result[] | select(.type=="CNAME") | .id' | while read -r cname_id; do
-            [ -z "${cname_id}" ] && continue
-            cf -X DELETE "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records/${cname_id}" \
-              | jq '{success, errors, deleted: .result.id}'
-          done
-
-          records_json=$(cf "${records_url}")
-          existing_a=$(printf '%s' "${records_json}" | jq -r '.result[] | select(.type=="A") | .content')
-
-          for ip in 185.199.108.153 185.199.109.153 185.199.110.153 185.199.111.153; do
-            if printf '%s\n' "${existing_a}" | grep -qx "${ip}"; then
-              echo "A ${ip} already present"
-              continue
-            fi
-            payload=$(jq -n --arg ip "${ip}" '{type:"A",name:"portfolio",content:$ip,proxied:false,ttl:1}')
-            cf -X POST --data "${payload}" \
-              "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records" \
-              | jq '{success, errors, result: (.result | {id, name, type, content, proxied})}'
-          done
+        with:
+          args: push
+          config_file: dns/dnsconfig.js
+          creds_file: dns/creds.json
 
       - name: Deploy to GitHub Pages
         id: deployment
