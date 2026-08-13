@@ -1,5 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import AsciiSplit from "../components/AsciiSplit.astro";
+import ProjectCard from "../components/ProjectCard.astro";
 import { site } from "../data/site";
 import { getFeaturedProjects } from "../lib/projects";
 
@@ -12,20 +14,28 @@ const projects = await getFeaturedProjects();
 >
   <p class="role">{site.role}</p>
   <h1>{site.name}</h1>
-  <p class="handle">{site.handle}</p>
   <p class="tagline">{site.tagline}</p>
   <p class="actions">
-    <a href="/projects">Projects</a>
-    <a href={site.github}>GitHub</a>
+    <a class="cmd-link" href="/projects">
+      <span aria-hidden="true">[ </span>Projects<span aria-hidden="true"> ]</span>
+    </a>
+    <a class="cmd-link" href={site.github}>
+      <span aria-hidden="true">[ </span>GitHub<span aria-hidden="true"> ]</span>
+    </a>
   </p>
 
+  <AsciiSplit />
+
   <h2>Selected work</h2>
-  <ul class="project-list">
+  <ul class="project-grid">
     {
       projects.map((project) => (
         <li>
-          <a href={`/projects/${project.id}`}>{project.data.title}</a>
-          <p>{project.data.summary}</p>
+          <ProjectCard
+            href={`/projects/${project.id}`}
+            title={project.data.title}
+            meta={project.data.stack[0] ?? project.data.category}
+          />
         </li>
       ))
     }
@@ -33,8 +43,7 @@ const projects = await getFeaturedProjects();
 </Layout>
 
 <style>
-  .role,
-  .handle {
+  .role {
     margin: 0;
     color: var(--color-muted-foreground);
     font-family: var(--font-mono);
@@ -42,59 +51,49 @@ const projects = await getFeaturedProjects();
   }
 
   h1 {
-    margin: var(--space-3) 0 var(--space-2);
-    font-size: 1.75rem;
+    margin: var(--space-3) 0 var(--space-4);
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
     font-weight: 500;
     letter-spacing: -0.02em;
-    line-height: 1.2;
+    line-height: 1.3;
   }
 
   .tagline {
     max-width: var(--measure);
-    margin: var(--space-6) 0 0;
+    margin: 0;
   }
 
   .actions {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-6);
-    margin: var(--space-8) 0 0;
+    gap: var(--space-4) var(--space-6);
+    margin: var(--space-6) 0 0;
   }
 
-  .actions a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 2.75rem;
-    font-family: var(--font-mono);
-    font-size: var(--text-small);
+  .actions .cmd-link {
+    color: var(--color-accent);
   }
 
   h2 {
-    margin: var(--space-16) 0 var(--space-6);
-    font-size: 1.125rem;
+    margin: 0 0 var(--space-6);
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
     font-weight: 500;
   }
 
-  .project-list {
+  .project-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  .project-list li + li {
-    margin-top: var(--space-6);
-  }
-
-  .project-list a {
-    font-weight: 500;
-    text-decoration: none;
-  }
-
-  .project-list a:hover {
-    text-decoration: underline;
-  }
-
-  .project-list p {
-    margin: var(--space-2) 0 0;
+  @media (min-width: 40rem) {
+    .project-grid {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 </style>

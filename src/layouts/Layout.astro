@@ -2,7 +2,9 @@
 import "@fontsource/ibm-plex-sans/400.css";
 import "@fontsource/ibm-plex-sans/500.css";
 import "@fontsource/jetbrains-mono/400.css";
+import "@fontsource/jetbrains-mono/500.css";
 import "../styles/global.css";
+import AsciiBox from "../components/AsciiBox.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 
@@ -26,15 +28,31 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <script is:inline>
+      (() => {
+        try {
+          const stored = localStorage.getItem("theme");
+          if (stored === "light" || stored === "dark") {
+            document.documentElement.dataset.theme = stored;
+          }
+        } catch {
+          /* private mode */
+        }
+      })();
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#content">Skip to content</a>
     <div class="site-shell">
-      <SiteHeader />
-      <main id="content" class="site-main">
-        <slot />
-      </main>
-      <SiteFooter />
+      <div class="site-frame">
+        <AsciiBox>
+          <SiteHeader />
+          <main id="content" class="site-main">
+            <slot />
+          </main>
+          <SiteFooter />
+        </AsciiBox>
+      </div>
     </div>
   </body>
 </html>

@@ -1,14 +1,14 @@
 :root {
-  --color-primary: #18181b;
-  --color-on-primary: #ffffff;
-  --color-secondary: #3f3f46;
-  --color-accent: #2563eb;
-  --color-background: #fafafa;
-  --color-foreground: #09090b;
-  --color-muted: #e8ecf0;
-  --color-muted-foreground: #52525b;
-  --color-border: #e4e4e7;
-  --color-ring: #18181b;
+  --color-canvas: #e8e2d6;
+  --color-background: #f6f1e7;
+  --color-foreground: #1c1917;
+  --color-muted-foreground: #57534e;
+  --color-line: #44403c;
+  --color-accent: #0f766e;
+  --color-accent-hover: #115e59;
+  --color-primary: #1c1917;
+  --color-on-primary: #f6f1e7;
+  --color-ring: #0f766e;
 
   --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
@@ -22,9 +22,52 @@
   --space-12: 3rem;
   --space-16: 4rem;
 
-  --content-max: 42rem;
+  --content-max: 48rem;
+  --measure: 40rem;
   --text-body: 1rem;
   --text-small: 0.875rem;
   --leading-body: 1.5;
-  --focus-ring: 2px solid var(--color-accent);
+  --focus-ring: 2px solid var(--color-ring);
+  --move: 180ms ease-out;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-canvas: #0b1220;
+    --color-background: #0f172a;
+    --color-foreground: #f1f5f9;
+    --color-muted-foreground: #94a3b8;
+    --color-line: #64748b;
+    --color-accent: #2dd4bf;
+    --color-accent-hover: #5eead4;
+    --color-primary: #e2e8f0;
+    --color-on-primary: #0f172a;
+    --color-ring: #2dd4bf;
+  }
+}
+
+[data-theme="dark"] {
+  --color-canvas: #0b1220;
+  --color-background: #0f172a;
+  --color-foreground: #f1f5f9;
+  --color-muted-foreground: #94a3b8;
+  --color-line: #64748b;
+  --color-accent: #2dd4bf;
+  --color-accent-hover: #5eead4;
+  --color-primary: #e2e8f0;
+  --color-on-primary: #0f172a;
+  --color-ring: #2dd4bf;
+}
+
+[data-theme="light"] {
+  --color-canvas: #e8e2d6;
+  --color-background: #f6f1e7;
+  --color-foreground: #1c1917;
+  --color-muted-foreground: #57534e;
+  --color-line: #44403c;
+  --color-accent: #0f766e;
+  --color-accent-hover: #115e59;
+  --color-primary: #1c1917;
+  --color-on-primary: #f6f1e7;
+  --color-ring: #0f766e;
 }

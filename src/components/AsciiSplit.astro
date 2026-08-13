@@ -1,0 +1,45 @@
+<div class="ascii-split" aria-hidden="true">
+  <span class="ascii-split__cap ascii-split__cap--start">├</span>
+  <span class="ascii-split__line"></span>
+  <span class="ascii-split__cap ascii-split__cap--end">┤</span>
+</div>
+
+<style>
+  .ascii-split {
+    --split-out: calc(-1 * var(--ascii-pad, var(--space-6)) - 1px);
+    position: relative;
+    height: 1em;
+    margin: var(--space-6) var(--split-out);
+    color: var(--color-line);
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+    line-height: 1;
+    user-select: none;
+  }
+
+  .ascii-split__line {
+    position: absolute;
+    inset-inline: 0;
+    top: 50%;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .ascii-split__cap {
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+    background: var(--color-background);
+    line-height: 1;
+  }
+
+  .ascii-split__cap--start {
+    left: 0;
+    transform: translate(-0.1em, -50%);
+  }
+
+  .ascii-split__cap--end {
+    right: 0;
+    transform: translate(0.1em, -50%);
+  }
+</style>

@@ -1,72 +1,64 @@
 ---
-import AsciiRule from "./AsciiRule.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+import { site } from "../data/site";
 
 const path = Astro.url.pathname;
 ---
 
 <header class="site-header">
-  <div class="site-header__inner">
-    <a class="site-header__mark" href="/">mamahoos</a>
-    <nav aria-label="Primary">
-      <ul>
-        <li>
-          <a href="/projects" aria-current={path.startsWith("/projects") ? "page" : undefined}>
-            Projects
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </div>
-  <AsciiRule />
+  <a class="site-header__mark" href="/">{site.handle}</a>
+  <nav aria-label="Primary">
+    <ul>
+      <li>
+        <a
+          class="cmd-link"
+          href="/projects"
+          aria-current={path.startsWith("/projects") ? "page" : undefined}
+        >
+          <span aria-hidden="true">[ </span>Projects<span aria-hidden="true"> ]</span>
+        </a>
+      </li>
+      <li>
+        <a class="cmd-link" href={site.github}>
+          GitHub <span aria-hidden="true">↗</span>
+        </a>
+      </li>
+      <li>
+        <ThemeToggle />
+      </li>
+    </ul>
+  </nav>
 </header>
 
 <style>
   .site-header {
-    width: min(100% - var(--space-8), var(--content-max));
-    margin-inline: auto;
-    padding-top: var(--space-8);
-  }
-
-  .site-header__inner {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     gap: var(--space-4);
-    min-height: 2.75rem;
   }
 
   .site-header__mark {
     color: var(--color-foreground);
     font-family: var(--font-mono);
     font-size: var(--text-small);
+    font-weight: 500;
     text-decoration: none;
   }
 
   .site-header__mark:hover {
+    color: var(--color-accent);
     text-decoration: underline;
   }
 
   nav ul {
     display: flex;
-    gap: var(--space-6);
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-6);
     margin: 0;
     padding: 0;
     list-style: none;
-  }
-
-  nav a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 2.75rem;
-    color: var(--color-foreground);
-    font-family: var(--font-mono);
-    font-size: var(--text-small);
-    text-decoration: none;
-  }
-
-  nav a:hover,
-  nav a[aria-current="page"] {
-    text-decoration: underline;
   }
 </style>

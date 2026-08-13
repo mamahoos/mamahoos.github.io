@@ -38,9 +38,13 @@ docs/              Spec
 tasks/             Plan and task list
 ```
 
+## Visual
+
+Warm paper in light mode and a slate editor surface in dark mode, with a teal accent. Chrome uses JetBrains Mono and box-drawing frames (`┌ ┐ └ ┘ ├ ┤`). Theme follows `prefers-color-scheme`, with an explicit Dark/Light control that persists in `localStorage`. Decorative ASCII is `aria-hidden="true"`.
+
 ## Code Style
 
-Astro components for static markup. Type imports use `import type`. Content is queried with `getCollection()`. CSS tokens live on `:root`. Decorative ASCII is `aria-hidden="true"`.
+Astro components for static markup. Type imports use `import type`. Content is queried with `getCollection()`. CSS tokens live on `:root` and `[data-theme]`. Decorative ASCII is `aria-hidden="true"`.
 
 ## Testing Strategy
 
