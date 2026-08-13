@@ -11,20 +11,24 @@ const { href, index, title, meta, summary } = Astro.props;
 const label = String(index).padStart(2, "0");
 ---
 
-<a class="project-item" href={href}>
+<a class:list={["project-item", summary && "project-item--detail"]} href={href}>
   <span class="project-item__index" aria-hidden="true">{label}</span>
-  <span class="project-item__body">
-    <span class="project-item__title">{title}</span>
-    {summary ? <span class="project-item__summary">{summary}</span> : null}
-    <span class="project-item__meta">{meta}</span>
-  </span>
+  <span class="project-item__title">{title}</span>
+  <span class="project-item__meta">{meta}</span>
+  {summary ? <span class="project-item__summary">{summary}</span> : null}
 </a>
 
 <style>
   .project-item {
     display: grid;
-    grid-template-columns: 2.25rem minmax(0, 1fr);
-    column-gap: var(--space-4);
+    grid-template-columns: 2.75rem minmax(0, 1fr);
+    grid-template-areas:
+      "index title"
+      ". meta";
+    column-gap: var(--space-6);
+    row-gap: var(--space-1);
+    align-items: baseline;
+    width: 100%;
     min-height: 2.75rem;
     padding-block: var(--space-4);
     color: inherit;
@@ -32,34 +36,41 @@ const label = String(index).padStart(2, "0");
     cursor: pointer;
   }
 
+  .project-item--detail {
+    grid-template-areas:
+      "index title"
+      ". summary"
+      ". meta";
+  }
+
   .project-item__index {
+    grid-area: index;
     color: var(--color-muted-foreground);
     font-family: var(--font-mono);
     font-size: var(--text-small);
-    line-height: 1.5;
+    font-variant-numeric: tabular-nums;
     transition: color var(--move);
   }
 
   .project-item__title {
-    display: block;
+    grid-area: title;
     font-family: var(--font-mono);
     font-size: var(--text-body);
     font-weight: 500;
     transition: color var(--move);
   }
 
-  .project-item__summary {
-    display: block;
-    max-width: var(--measure);
-    margin-top: var(--space-2);
+  .project-item__meta {
+    grid-area: meta;
+    color: var(--color-muted-foreground);
+    font-family: var(--font-mono);
     font-size: var(--text-small);
   }
 
-  .project-item__meta {
-    display: block;
+  .project-item__summary {
+    grid-area: summary;
+    max-width: var(--measure);
     margin-top: var(--space-2);
-    color: var(--color-muted-foreground);
-    font-family: var(--font-mono);
     font-size: var(--text-small);
   }
 
@@ -68,5 +79,22 @@ const label = String(index).padStart(2, "0");
   .project-item:focus-visible .project-item__index,
   .project-item:focus-visible .project-item__title {
     color: var(--color-accent);
+  }
+
+  @media (min-width: 40rem) {
+    .project-item {
+      grid-template-columns: 2.75rem minmax(0, 1fr) auto;
+      grid-template-areas: "index title meta";
+    }
+
+    .project-item--detail {
+      grid-template-areas:
+        "index title meta"
+        ". summary summary";
+    }
+
+    .project-item__meta {
+      text-align: end;
+    }
   }
 </style>
