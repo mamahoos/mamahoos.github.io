@@ -11,14 +11,16 @@ const projects = await getFeaturedProjects();
   description="Selected infrastructure, automation, and software projects."
 >
   <h1>Projects</h1>
-  <ul class="project-grid">
+  <p class="lede">Selected infrastructure, automation, and software work.</p>
+  <ul class="project-list">
     {
       projects.map((project) => (
         <li>
           <ProjectCard
             href={`/projects/${project.id}`}
+            index={project.data.order}
             title={project.data.title}
-            meta={project.data.category}
+            meta={`${project.data.category} · ${project.data.stack[0] ?? project.data.stack.join(", ")}`}
             summary={project.data.summary}
           />
         </li>
@@ -29,25 +31,26 @@ const projects = await getFeaturedProjects();
 
 <style>
   h1 {
-    margin: 0 0 var(--space-8);
+    margin: 0 0 var(--space-3);
     font-family: var(--font-mono);
     font-size: 1.5rem;
     font-weight: 500;
     letter-spacing: -0.02em;
   }
 
-  .project-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-4);
+  .lede {
+    max-width: var(--measure);
+    margin: 0 0 var(--space-4);
+    color: var(--color-muted-foreground);
+  }
+
+  .project-list {
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  @media (min-width: 40rem) {
-    .project-grid {
-      grid-template-columns: 1fr 1fr;
-    }
+  .project-list li + li {
+    border-top: 1px solid var(--color-line);
   }
 </style>

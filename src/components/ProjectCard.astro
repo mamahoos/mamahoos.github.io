@@ -1,51 +1,61 @@
 ---
-import AsciiBox from "./AsciiBox.astro";
-
 interface Props {
   href: string;
+  index: number;
   title: string;
   meta: string;
   summary?: string;
 }
 
-const { href, title, meta, summary } = Astro.props;
+const { href, index, title, meta, summary } = Astro.props;
+const label = String(index).padStart(2, "0");
 ---
 
-<a class="project-card" href={href}>
-  <AsciiBox nested>
-    <span class="project-card__title">{title}</span>
-    <span class="project-card__meta">{meta}</span>
-    {summary ? <span class="project-card__summary">{summary}</span> : null}
-  </AsciiBox>
+<a class="project-item" href={href}>
+  <span class="project-item__index" aria-hidden="true">{label}</span>
+  <span class="project-item__body">
+    <span class="project-item__title">{title}</span>
+    {summary ? <span class="project-item__summary">{summary}</span> : null}
+    <span class="project-item__meta">{meta}</span>
+  </span>
 </a>
 
 <style>
-  .project-card {
-    display: block;
+  .project-item {
+    display: grid;
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+    column-gap: var(--space-4);
     min-height: 2.75rem;
+    padding-block: var(--space-4);
     color: inherit;
     text-decoration: none;
     cursor: pointer;
   }
 
-  .project-card:hover :global(.ascii-box),
-  .project-card:focus-visible :global(.ascii-box) {
-    border-color: var(--color-accent);
+  .project-item__index {
+    color: var(--color-muted-foreground);
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+    line-height: 1.5;
+    transition: color var(--move);
   }
 
-  .project-card:hover :global(.ascii-box__c),
-  .project-card:focus-visible :global(.ascii-box__c) {
-    color: var(--color-accent);
-  }
-
-  .project-card__title {
+  .project-item__title {
     display: block;
     font-family: var(--font-mono);
     font-size: var(--text-body);
     font-weight: 500;
+    transition: color var(--move);
   }
 
-  .project-card__meta {
+  .project-item__summary {
+    display: block;
+    max-width: var(--measure);
+    margin-top: var(--space-2);
+    font-size: var(--text-small);
+  }
+
+  .project-item__meta {
     display: block;
     margin-top: var(--space-2);
     color: var(--color-muted-foreground);
@@ -53,11 +63,10 @@ const { href, title, meta, summary } = Astro.props;
     font-size: var(--text-small);
   }
 
-  .project-card__summary {
-    display: block;
-    margin-top: var(--space-3);
-    color: var(--color-foreground);
-    font-family: var(--font-sans);
-    font-size: var(--text-small);
+  .project-item:hover .project-item__index,
+  .project-item:hover .project-item__title,
+  .project-item:focus-visible .project-item__index,
+  .project-item:focus-visible .project-item__title {
+    color: var(--color-accent);
   }
 </style>

@@ -2,6 +2,7 @@
 import type { GetStaticPaths } from "astro";
 import { render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
+import AsciiSplit from "../../components/AsciiSplit.astro";
 import { getFeaturedProjects } from "../../lib/projects";
 
 export const getStaticPaths = (async () => {
@@ -17,27 +18,38 @@ const { Content } = await render(project);
 ---
 
 <Layout title={`${project.data.title} · mamahoos`} description={project.data.summary}>
+  <p class="kicker">
+    <a class="cmd-link" href="/projects">
+      <span aria-hidden="true">[ </span>Projects<span aria-hidden="true"> ]</span>
+    </a>
+  </p>
   <p class="category">{project.data.category}</p>
   <h1>{project.data.title}</h1>
   <p class="summary">{project.data.summary}</p>
   <p class="stack">{project.data.stack.join(" · ")}</p>
   <p class="links">
-    <a href={project.data.repo}>Source</a>
+    <a class="cmd-link" href={project.data.repo}>
+      <span aria-hidden="true">[ </span>Source<span aria-hidden="true"> ]</span>
+    </a>
     {
       project.data.relatedRepos.map((related) => (
-        <>
-          <span aria-hidden="true"> · </span>
-          <a href={related.url}>{related.label}</a>
-        </>
+        <a class="cmd-link" href={related.url}>
+          <span aria-hidden="true">[ </span>{related.label}<span aria-hidden="true"> ]</span>
+        </a>
       ))
     }
   </p>
+  <AsciiSplit />
   <div class="body">
     <Content />
   </div>
 </Layout>
 
 <style>
+  .kicker {
+    margin: 0 0 var(--space-4);
+  }
+
   .category,
   .stack {
     margin: 0;
@@ -47,7 +59,7 @@ const { Content } = await render(project);
   }
 
   h1 {
-    margin: var(--space-3) 0 var(--space-4);
+    margin: var(--space-2) 0 var(--space-4);
     font-family: var(--font-mono);
     font-size: 1.5rem;
     font-weight: 500;
@@ -68,23 +80,19 @@ const { Content } = await render(project);
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--space-2) 0;
-    margin: var(--space-6) 0 var(--space-8);
-    font-family: var(--font-mono);
-    font-size: var(--text-small);
-  }
-
-  .links a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 2.75rem;
+    gap: var(--space-2) var(--space-6);
+    margin: var(--space-4) 0 0;
   }
 
   .body :global(h2) {
-    margin: var(--space-8) 0 var(--space-3);
+    margin: 0 0 var(--space-3);
     font-family: var(--font-mono);
     font-size: 1.125rem;
     font-weight: 500;
+  }
+
+  .body :global(h2:not(:first-child)) {
+    margin-top: var(--space-8);
   }
 
   .body :global(p) {
