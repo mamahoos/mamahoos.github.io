@@ -1,17 +1,18 @@
 ---
 import AsciiRule from "./AsciiRule.astro";
+import { site } from "../data/site";
 ---
 
 <footer class="site-footer">
   <AsciiRule />
   <p>
-    <a href="mailto:me@mamahoos.ir">me@mamahoos.ir</a>
+    <a href={`mailto:${site.email}`}>{site.email}</a>
     <span aria-hidden="true"> · </span>
-    <a href="https://github.com/mamahoos">GitHub</a>
+    <a href={site.github}>GitHub</a>
     <span aria-hidden="true"> · </span>
-    <a href="https://www.linkedin.com/in/mamahoos">LinkedIn</a>
+    <a href={site.linkedin}>LinkedIn</a>
     <span aria-hidden="true"> · </span>
-    <a href="https://t.me/mamahoos">Telegram</a>
+    <a href={site.telegram}>Telegram</a>
   </p>
 </footer>
 

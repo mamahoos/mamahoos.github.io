@@ -1,10 +1,56 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { site } from "../data/site";
 ---
 
 <Layout
-  title="mamahoos"
-  description="Engineering portfolio of Mohammad Hosein Kouhkan."
+  title={`${site.name} · ${site.role}`}
+  description={site.tagline}
 >
-  <h1>Astro</h1>
+  <p class="role">{site.role}</p>
+  <h1>{site.name}</h1>
+  <p class="handle">{site.handle}</p>
+  <p class="tagline">{site.tagline}</p>
+  <p class="actions">
+    <a href="/projects">Projects</a>
+    <a href={site.github}>GitHub</a>
+  </p>
 </Layout>
+
+<style>
+  .role,
+  .handle {
+    margin: 0;
+    color: var(--color-muted-foreground);
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+  }
+
+  h1 {
+    margin: var(--space-3) 0 var(--space-2);
+    font-size: 1.75rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .tagline {
+    max-width: var(--measure);
+    margin: var(--space-6) 0 0;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+    margin: var(--space-8) 0 0;
+  }
+
+  .actions a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+  }
+</style>
