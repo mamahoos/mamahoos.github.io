@@ -24,6 +24,7 @@
 
   --content-max: 48rem;
   --measure: 40rem;
+  --text-title: clamp(1.25rem, 0.9rem + 1.8vw, 1.5rem);
   --text-body: 1rem;
   --text-small: 0.875rem;
   --leading-body: 1.5;
