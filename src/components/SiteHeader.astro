@@ -1,0 +1,72 @@
+---
+import AsciiRule from "./AsciiRule.astro";
+
+const path = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-header__mark" href="/">mamahoos</a>
+    <nav aria-label="Primary">
+      <ul>
+        <li>
+          <a href="/projects" aria-current={path.startsWith("/projects") ? "page" : undefined}>
+            Projects
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <AsciiRule />
+</header>
+
+<style>
+  .site-header {
+    width: min(100% - var(--space-8), var(--content-max));
+    margin-inline: auto;
+    padding-top: var(--space-8);
+  }
+
+  .site-header__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    min-height: 2.75rem;
+  }
+
+  .site-header__mark {
+    color: var(--color-foreground);
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+    text-decoration: none;
+  }
+
+  .site-header__mark:hover {
+    text-decoration: underline;
+  }
+
+  nav ul {
+    display: flex;
+    gap: var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    color: var(--color-foreground);
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+    text-decoration: none;
+  }
+
+  nav a:hover,
+  nav a[aria-current="page"] {
+    text-decoration: underline;
+  }
+</style>

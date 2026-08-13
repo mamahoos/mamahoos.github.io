@@ -1,0 +1,40 @@
+---
+import AsciiRule from "./AsciiRule.astro";
+---
+
+<footer class="site-footer">
+  <AsciiRule />
+  <p>
+    <a href="mailto:me@mamahoos.ir">me@mamahoos.ir</a>
+    <span aria-hidden="true"> · </span>
+    <a href="https://github.com/mamahoos">GitHub</a>
+    <span aria-hidden="true"> · </span>
+    <a href="https://www.linkedin.com/in/mamahoos">LinkedIn</a>
+    <span aria-hidden="true"> · </span>
+    <a href="https://t.me/mamahoos">Telegram</a>
+  </p>
+</footer>
+
+<style>
+  .site-footer {
+    width: min(100% - var(--space-8), var(--content-max));
+    margin-inline: auto;
+    padding-bottom: var(--space-12);
+  }
+
+  .site-footer p {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) 0;
+    margin: var(--space-6) 0 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+  }
+
+  .site-footer a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+  }
+</style>

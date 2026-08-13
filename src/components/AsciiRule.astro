@@ -1,0 +1,24 @@
+---
+interface Props {
+  label?: string;
+}
+
+const { label = "rule" } = Astro.props;
+---
+
+<div class="ascii-rule" aria-hidden="true" data-label={label}>
+  ────────────────────────────────
+</div>
+
+<style>
+  .ascii-rule {
+    margin: 0;
+    overflow: hidden;
+    color: var(--color-secondary);
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+    letter-spacing: 0.02em;
+    line-height: 1;
+    user-select: none;
+  }
+</style>
