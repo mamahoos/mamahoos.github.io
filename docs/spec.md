@@ -2,7 +2,7 @@
 
 ## Objective
 
-A static engineering portfolio at `https://portfolio.mamahoos.ir` for technical recruiters, hiring managers, and engineers. It should answer who this person is, what kind of work they do, and where the evidence lives.
+A static engineering portfolio at `https://mamahoos.github.io` for technical recruiters, hiring managers, and engineers. It should answer who this person is, what kind of work they do, and where the evidence lives.
 
 ## Tech Stack
 
@@ -33,7 +33,7 @@ src/layouts        Page shell
 src/pages          Routes
 src/styles         Tokens and global CSS
 src/content        Markdown collections
-public/            CNAME and static assets
+public/            static assets
 docs/              Spec
 tasks/             Plan and task list
 ```
@@ -63,7 +63,7 @@ v1 verification is `astro check` and `astro build` inside the Docker image. No u
 - Homepage shows Mohammad Hosein Kouhkan, handle `mamahoos`, role, profile one-liner, and contacts
 - Six featured projects with real GitHub links and honest case studies
 - GitHub Actions builds in the same Docker image and deploys Pages
-- `site` is `https://portfolio.mamahoos.ir` with `public/CNAME` and no `base`
+- `site` is `https://mamahoos.github.io` with no `base`
 
 ## Out of scope (v1)
 

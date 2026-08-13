@@ -41,14 +41,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Point Pages at the custom domain
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh api --method PUT "repos/${{ github.repository }}/pages" \
-            --field cname='portfolio.mamahoos.ir' \
-            --field build_type='workflow'
-
       - name: Upsert Cloudflare CNAME
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
