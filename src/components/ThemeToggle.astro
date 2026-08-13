@@ -5,12 +5,13 @@
   aria-pressed="false"
   aria-label="Color theme"
 >
-  <span aria-hidden="true">[ </span>Dark<span aria-hidden="true"> ]</span>
+  <span aria-hidden="true">[ ○ ]</span>
 </button>
 
 <script>
   const storageKey = "theme";
   const boundFlag = "__themeToggleBound";
+  const glyph = { dark: "●", light: "○" } as const;
 
   type ThemeRoot = Window & { __themeToggleBound?: boolean };
 
@@ -24,16 +25,11 @@
       : "light";
   }
 
-  function bracketLabel(label: string): DocumentFragment {
-    const fragment = document.createDocumentFragment();
-    const open = document.createElement("span");
-    open.setAttribute("aria-hidden", "true");
-    open.textContent = "[ ";
-    const close = document.createElement("span");
-    close.setAttribute("aria-hidden", "true");
-    close.textContent = " ]";
-    fragment.append(open, label, close);
-    return fragment;
+  function bracketGlyph(theme: "light" | "dark"): HTMLSpanElement {
+    const visual = document.createElement("span");
+    visual.setAttribute("aria-hidden", "true");
+    visual.textContent = `[ ${glyph[theme]} ]`;
+    return visual;
   }
 
   function syncToggle(button: HTMLButtonElement, theme: "light" | "dark") {
@@ -43,7 +39,7 @@
       "aria-label",
       isDark ? "Color theme: dark" : "Color theme: light",
     );
-    button.replaceChildren(bracketLabel(isDark ? "Dark" : "Light"));
+    button.replaceChildren(bracketGlyph(theme));
   }
 
   function applyTheme(theme: "light" | "dark") {
@@ -94,6 +90,5 @@
 
   .theme-toggle:hover {
     color: var(--color-accent-hover);
-    text-decoration: underline;
   }
 </style>
