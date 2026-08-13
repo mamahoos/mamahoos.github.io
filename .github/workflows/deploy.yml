@@ -34,14 +34,14 @@ jobs:
           path: dist
 
   deploy:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Upsert Cloudflare CNAME
+      - name: Upsert Cloudflare A records for GitHub Pages
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: |
@@ -51,9 +51,14 @@ jobs:
             exit 0
           fi
 
-          zone_json=$(curl -sS --fail-with-body \
-            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
-            "https://api.cloudflare.com/client/v4/zones?name=mamahoos.ir")
+          cf() {
+            curl -sS --fail-with-body \
+              -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
+              -H "Content-Type: application/json" \
+              "$@"
+          }
+
+          zone_json=$(cf "https://api.cloudflare.com/client/v4/zones?name=mamahoos.ir")
           zone_id=$(printf '%s' "${zone_json}" | jq -r '.result[0].id // empty')
           if [ -z "${zone_id}" ] || [ "${zone_id}" = "null" ]; then
             echo "Could not find Cloudflare zone mamahoos.ir"
@@ -61,25 +66,27 @@ jobs:
             exit 1
           fi
 
-          payload='{"type":"CNAME","name":"portfolio","content":"mamahoos.github.io","proxied":false,"ttl":1}'
-          existing_json=$(curl -sS --fail-with-body \
-            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
-            "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records?type=CNAME&name=portfolio.mamahoos.ir")
-          record_id=$(printf '%s' "${existing_json}" | jq -r '.result[0].id // empty')
+          records_url="https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records?name=portfolio.mamahoos.ir"
+          records_json=$(cf "${records_url}")
+          printf '%s' "${records_json}" | jq -r '.result[] | select(.type=="CNAME") | .id' | while read -r cname_id; do
+            [ -z "${cname_id}" ] && continue
+            cf -X DELETE "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records/${cname_id}" \
+              | jq '{success, errors, deleted: .result.id}'
+          done
 
-          if [ -n "${record_id}" ] && [ "${record_id}" != "null" ]; then
-            curl -sS --fail-with-body -X PUT \
-              -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
-              -H "Content-Type: application/json" \
-              --data "${payload}" \
-              "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records/${record_id}"
-          else
-            curl -sS --fail-with-body -X POST \
-              -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
-              -H "Content-Type: application/json" \
-              --data "${payload}" \
-              "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records"
-          fi | jq '{success, errors, result: (.result | {id, name, type, content, proxied})}'
+          records_json=$(cf "${records_url}")
+          existing_a=$(printf '%s' "${records_json}" | jq -r '.result[] | select(.type=="A") | .content')
+
+          for ip in 185.199.108.153 185.199.109.153 185.199.110.153 185.199.111.153; do
+            if printf '%s\n' "${existing_a}" | grep -qx "${ip}"; then
+              echo "A ${ip} already present"
+              continue
+            fi
+            payload=$(jq -n --arg ip "${ip}" '{type:"A",name:"portfolio",content:$ip,proxied:false,ttl:1}')
+            cf -X POST --data "${payload}" \
+              "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records" \
+              | jq '{success, errors, result: (.result | {id, name, type, content, proxied})}'
+          done
 
       - name: Deploy to GitHub Pages
         id: deployment
