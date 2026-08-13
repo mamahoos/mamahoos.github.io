@@ -1,22 +1,22 @@
 # Tasks: portfolio v1
 
-- [ ] Task 1: Scaffold Astro + TypeScript strict, Dockerfile/compose (Node 24, npm)
+- [x] Task 1: Scaffold Astro + TypeScript strict, Dockerfile/compose (Node 24, npm)
   - Acceptance: `docker compose run --rm web npm run check` and `npm run build` succeed
   - Verify: image check + build
   - Files: `package.json`, `astro.config.ts`, `Dockerfile`, `compose.yaml`, `tsconfig.json`
-- [ ] Task 2: Layout, CSS tokens, ASCII chrome, self-hosted fonts, a11y
+- [x] Task 2: Layout, CSS tokens, ASCII chrome, self-hosted fonts, a11y
   - Acceptance: shared layout, ink/paper tokens, decorative ASCII hidden from AT, visible focus, `prefers-reduced-motion`
   - Verify: check + build
   - Files: `src/layouts/Layout.astro`, `src/styles/tokens.css`, header/footer components
-- [ ] Task 3: Homepage identity
+- [x] Task 3: Homepage identity
   - Acceptance: name, handle, role, profile one-liner, contacts
   - Verify: check + build; homepage HTML contains identity strings
   - Files: `src/pages/index.astro`
-- [ ] Task 4: Projects collection and pages
+- [x] Task 4: Projects collection and pages
   - Acceptance: `/projects` and `/projects/[slug]` for six featured items
   - Verify: check + build; slugs exist in `dist/`
   - Files: `src/content.config.ts`, `src/content/projects/*.md`, project pages
-- [ ] Task 5: CI + Pages
+- [x] Task 5: CI + Pages
   - Acceptance: workflow builds in the same image, uploads Pages artifact, CNAME present
   - Verify: workflow file + `public/CNAME` + `astro.config.ts` `site`
   - Files: `.github/workflows/deploy.yml`, `public/CNAME`, `astro.config.ts`
