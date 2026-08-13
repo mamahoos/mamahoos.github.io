@@ -1,6 +1,6 @@
 # portfolio
 
-Static site for [mamahoos.github.io](https://mamahoos.github.io).
+Static site for [portfolio.mamahoos.ir](https://portfolio.mamahoos.ir).
 
 ## Requirements
 
