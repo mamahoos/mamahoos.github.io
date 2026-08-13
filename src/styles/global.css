@@ -7,6 +7,7 @@
 }
 
 html {
+  overflow-x: clip;
   color-scheme: light;
 }
 
@@ -26,7 +27,8 @@ html {
 
 body {
   margin: 0;
-  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: clip;
   background: var(--color-canvas);
   color: var(--color-foreground);
   font-family: var(--font-sans);
@@ -72,12 +74,16 @@ a:hover {
 .site-shell {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  padding: var(--space-6) var(--space-4) var(--space-12);
+  min-height: 100dvh;
+  padding-top: max(var(--space-4), env(safe-area-inset-top, 0px));
+  padding-right: max(var(--space-3), env(safe-area-inset-right, 0px));
+  padding-bottom: max(var(--space-8), env(safe-area-inset-bottom, 0px));
+  padding-left: max(var(--space-3), env(safe-area-inset-left, 0px));
 }
 
 .site-frame {
   width: min(100%, var(--content-max));
+  min-width: 0;
   margin-inline: auto;
 }
 
@@ -103,7 +109,10 @@ a:hover {
 
 @media (min-width: 40rem) {
   .site-shell {
-    padding: var(--space-12) var(--space-8);
+    padding-top: max(var(--space-12), env(safe-area-inset-top, 0px));
+    padding-right: max(var(--space-8), env(safe-area-inset-right, 0px));
+    padding-bottom: max(var(--space-12), env(safe-area-inset-bottom, 0px));
+    padding-left: max(var(--space-8), env(safe-area-inset-left, 0px));
   }
 }
 

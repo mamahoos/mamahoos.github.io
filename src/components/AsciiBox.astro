@@ -19,11 +19,17 @@ const { nested = false } = Astro.props;
 <style>
   .ascii-box {
     --ascii-fill: var(--color-canvas);
-    --ascii-pad: var(--space-6);
+    --ascii-pad: var(--space-4);
     position: relative;
     border: 1px solid var(--color-line);
     background: var(--color-background);
     transition: border-color var(--move);
+  }
+
+  @media (min-width: 40rem) {
+    .ascii-box {
+      --ascii-pad: var(--space-6);
+    }
   }
 
   .ascii-box--nested {

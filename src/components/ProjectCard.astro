@@ -25,7 +25,7 @@ const label = String(index).padStart(2, "0");
     grid-template-areas:
       "index title"
       ". meta";
-    column-gap: var(--space-6);
+    column-gap: var(--space-3);
     row-gap: var(--space-1);
     align-items: baseline;
     width: 100%;
@@ -54,6 +54,7 @@ const label = String(index).padStart(2, "0");
 
   .project-item__title {
     grid-area: title;
+    overflow-wrap: anywhere;
     font-family: var(--font-mono);
     font-size: var(--text-body);
     font-weight: 500;
@@ -85,6 +86,7 @@ const label = String(index).padStart(2, "0");
     .project-item {
       grid-template-columns: 2.75rem minmax(0, 1fr) auto;
       grid-template-areas: "index title meta";
+      column-gap: var(--space-6);
     }
 
     .project-item--detail {
