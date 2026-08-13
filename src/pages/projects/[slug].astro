@@ -1,0 +1,101 @@
+---
+import type { GetStaticPaths } from "astro";
+import { render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import { getFeaturedProjects } from "../../lib/projects";
+
+export const getStaticPaths = (async () => {
+  const projects = await getFeaturedProjects();
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}) satisfies GetStaticPaths;
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<Layout title={`${project.data.title} · mamahoos`} description={project.data.summary}>
+  <p class="category">{project.data.category}</p>
+  <h1>{project.data.title}</h1>
+  <p class="summary">{project.data.summary}</p>
+  <p class="stack">{project.data.stack.join(" · ")}</p>
+  <p class="links">
+    <a href={project.data.repo}>Source</a>
+    {
+      project.data.relatedRepos.map((related) => (
+        <>
+          <span aria-hidden="true"> · </span>
+          <a href={related.url}>{related.label}</a>
+        </>
+      ))
+    }
+  </p>
+  <div class="body">
+    <Content />
+  </div>
+</Layout>
+
+<style>
+  .category,
+  .stack {
+    margin: 0;
+    color: var(--color-muted-foreground);
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+  }
+
+  h1 {
+    margin: var(--space-3) 0 var(--space-4);
+    font-size: 1.75rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .summary {
+    max-width: var(--measure);
+    margin: 0;
+  }
+
+  .stack {
+    margin-top: var(--space-4);
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) 0;
+    margin: var(--space-6) 0 var(--space-8);
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+  }
+
+  .links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+  }
+
+  .body :global(h2) {
+    margin: var(--space-8) 0 var(--space-3);
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+
+  .body :global(p) {
+    max-width: var(--measure);
+    margin: 0 0 var(--space-4);
+  }
+
+  .body :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .body :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+  }
+</style>

@@ -1,7 +1,63 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import { getFeaturedProjects } from "../../lib/projects";
+
+const projects = await getFeaturedProjects();
 ---
 
-<Layout title="Projects · mamahoos" description="Selected engineering projects.">
+<Layout
+  title="Projects · mamahoos"
+  description="Selected infrastructure, automation, and software projects."
+>
   <h1>Projects</h1>
+  <ul class="project-list">
+    {
+      projects.map((project) => (
+        <li>
+          <p class="category">{project.data.category}</p>
+          <a href={`/projects/${project.id}`}>{project.data.title}</a>
+          <p>{project.data.summary}</p>
+        </li>
+      ))
+    }
+  </ul>
 </Layout>
+
+<style>
+  h1 {
+    margin: 0 0 var(--space-8);
+    font-size: 1.75rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  .project-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .project-list li + li {
+    margin-top: var(--space-8);
+  }
+
+  .category {
+    margin: 0 0 var(--space-2);
+    color: var(--color-muted-foreground);
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+  }
+
+  .project-list a {
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .project-list a:hover {
+    text-decoration: underline;
+  }
+
+  .project-list p:last-child {
+    margin: var(--space-2) 0 0;
+  }
+</style>
