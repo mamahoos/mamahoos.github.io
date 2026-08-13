@@ -8,12 +8,12 @@ const projects = defineCollection({
     title: z.string(),
     summary: z.string(),
     category: z.string(),
-    repo: z.string().url(),
+    repo: z.url(),
     relatedRepos: z
       .array(
         z.object({
           label: z.string(),
-          url: z.string().url(),
+          url: z.url(),
         }),
       )
       .default([]),
