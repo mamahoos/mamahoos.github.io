@@ -1,12 +1,16 @@
 ---
 import ThemeToggle from "./ThemeToggle.astro";
+import DemoMark from "./DemoMark.astro";
 import { site } from "../data/site";
 
 const path = Astro.url.pathname;
 ---
 
 <header class="site-header">
-  <a class="site-header__mark" href="/">{site.handle}</a>
+  <a class="site-header__mark" href="/">
+    <span class="site-header__handle">{site.handle}</span>
+    <DemoMark />
+  </a>
   <nav aria-label="Primary">
     <ul>
       <li>
@@ -42,8 +46,12 @@ const path = Astro.url.pathname;
 
   .site-header__mark {
     display: inline-flex;
-    align-items: center;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: var(--space-2);
+    row-gap: 0;
     min-height: 2.75rem;
+    max-width: 100%;
     color: var(--color-foreground);
     font-family: var(--font-mono);
     font-size: var(--text-small);
@@ -51,9 +59,24 @@ const path = Astro.url.pathname;
     text-decoration: none;
   }
 
-  .site-header__mark:hover {
+  .site-header__handle {
+    white-space: nowrap;
+  }
+
+  .site-header__mark:hover,
+  .site-header__mark:focus-visible {
     color: var(--color-accent);
     text-decoration: underline;
+  }
+
+  .site-header__mark:hover :global(.demo-mark),
+  .site-header__mark:focus-visible :global(.demo-mark) {
+    color: var(--color-accent);
+  }
+
+  .site-header__mark:hover :global(.demo-mark__paren),
+  .site-header__mark:focus-visible :global(.demo-mark__paren) {
+    color: var(--color-accent-hover);
   }
 
   nav ul {
