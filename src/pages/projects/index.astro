@@ -20,7 +20,7 @@ const projects = await getFeaturedProjects();
             href={`/projects/${project.id}`}
             index={project.data.order}
             title={project.data.title}
-            meta={`${project.data.category} · ${project.data.stack[0] ?? project.data.stack.join(", ")}`}
+            meta={project.data.category}
             summary={project.data.summary}
           />
         </li>

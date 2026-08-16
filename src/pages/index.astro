@@ -35,7 +35,7 @@ const projects = await getFeaturedProjects();
             href={`/projects/${project.id}`}
             index={project.data.order}
             title={project.data.title}
-            meta={project.data.stack[0] ?? project.data.category}
+            meta={project.data.category}
           />
         </li>
       ))
