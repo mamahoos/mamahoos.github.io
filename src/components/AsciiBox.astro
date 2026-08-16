@@ -7,10 +7,6 @@ const { nested = false } = Astro.props;
 ---
 
 <div class:list={["ascii-box", nested && "ascii-box--nested"]}>
-  <span class="ascii-box__c ascii-box__c--tl" aria-hidden="true">┌</span>
-  <span class="ascii-box__c ascii-box__c--tr" aria-hidden="true">┐</span>
-  <span class="ascii-box__c ascii-box__c--bl" aria-hidden="true">└</span>
-  <span class="ascii-box__c ascii-box__c--br" aria-hidden="true">┘</span>
   <div class="ascii-box__body">
     <slot />
   </div>
@@ -18,9 +14,7 @@ const { nested = false } = Astro.props;
 
 <style>
   .ascii-box {
-    --ascii-fill: var(--color-canvas);
     --ascii-pad: var(--space-4);
-    position: relative;
     border: 1px solid var(--color-line);
     background: var(--color-background);
     transition: border-color var(--move);
@@ -33,44 +27,10 @@ const { nested = false } = Astro.props;
   }
 
   .ascii-box--nested {
-    --ascii-fill: var(--color-background);
     --ascii-pad: var(--space-4);
   }
 
   .ascii-box__body {
     padding: var(--ascii-pad);
-  }
-
-  .ascii-box__c {
-    position: absolute;
-    z-index: 1;
-    color: var(--color-line);
-    background: var(--ascii-fill);
-    font-family: var(--font-mono);
-    font-size: var(--text-small);
-    line-height: 1;
-    pointer-events: none;
-    user-select: none;
-    transition: color var(--move);
-  }
-
-  .ascii-box__c--tl {
-    top: -0.45em;
-    left: -0.4em;
-  }
-
-  .ascii-box__c--tr {
-    top: -0.45em;
-    right: -0.4em;
-  }
-
-  .ascii-box__c--bl {
-    bottom: -0.45em;
-    left: -0.4em;
-  }
-
-  .ascii-box__c--br {
-    bottom: -0.45em;
-    right: -0.4em;
   }
 </style>
