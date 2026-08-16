@@ -23,8 +23,12 @@ const path = Astro.url.pathname;
         </a>
       </li>
       <li>
-        <a class="cmd-link" href={site.github}>
-          GitHub <span aria-hidden="true">↗</span>
+        <a
+          class="cmd-link"
+          href="/resume"
+          aria-current={path.startsWith("/resume") ? "page" : undefined}
+        >
+          <span aria-hidden="true">[ </span>Resume<span aria-hidden="true"> ]</span>
         </a>
       </li>
       <li>

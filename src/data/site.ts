@@ -4,7 +4,7 @@ export const site = {
   demo: true,
   role: "DevOps / Platform Engineer",
   tagline:
-    "Software engineer focused on infrastructure, automation, and reliable production systems.",
+    "Software engineer who designs infrastructure and automates reliable production systems.",
   email: "me@mamahoos.ir",
   github: "https://github.com/mamahoos",
   linkedin: "https://www.linkedin.com/in/mamahoos",

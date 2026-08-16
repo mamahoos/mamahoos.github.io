@@ -41,7 +41,12 @@ Ship a static Astro portfolio with a Docker toolchain for local and CI, ASCII-mi
 ### Checkpoint: Complete
 
 - [ ] v1 success criteria in `docs/spec.md` are met
-- [ ] `/resume` is still absent
+- [x] `/resume` HTML is built from `src/data/resume.ts`
+
+## Phase 4: Resume
+
+- [x] Task 6: Typed resume source of truth and `/resume` HTML
+- [x] Task 7: ATS resume PDF via Typst at `dist/resume.pdf`
 
 ## Risks and Mitigations
 
@@ -53,4 +58,4 @@ Ship a static Astro portfolio with a Docker toolchain for local and CI, ASCII-mi
 
 ## Open Questions
 
-None for v1. `/resume` waits on a master resume.
+None for the HTML resume and PDF artifact.
