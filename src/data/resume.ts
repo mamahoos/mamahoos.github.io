@@ -63,8 +63,11 @@ export const resume = {
         "Kubernetes",
         "Docker Swarm",
         "Nginx",
-        "Network+",
       ],
+    },
+    {
+      label: "Network",
+      items: ["Network+", "MikroTik"],
     },
     {
       label: "CI/CD & GitOps",
