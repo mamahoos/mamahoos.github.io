@@ -1,5 +1,5 @@
 import { spawnSync } from "node:child_process";
-import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { resume } from "../data/resume";
@@ -170,26 +170,36 @@ ${education()}
 `;
 }
 
+/**
+ * Runs a build tool, distinguishing a tool that failed from one that is not
+ * installed. On ENOENT `spawnSync` reports the cause in `error` and leaves
+ * `status`, `stdout`, and `stderr` null.
+ */
+function run(command: string, args: string[]): string {
+  const result = spawnSync(command, args, { encoding: "utf8" });
+  if (result.error) {
+    throw result.error;
+  }
+  if (result.status !== 0) {
+    throw new Error(result.stderr || result.stdout || `${command} failed`);
+  }
+  return result.stdout;
+}
+
 export function compileResumePdf(outPath: string): Buffer {
   const dir = mkdtempSync(join(tmpdir(), "portfolio-resume-"));
   const typPath = join(dir, "resume.typ");
   writeFileSync(typPath, toTypst());
 
-  const compiled = spawnSync("typst", ["compile", typPath, outPath], {
-    encoding: "utf8",
-  });
-  if (compiled.status !== 0) {
-    throw new Error(compiled.stderr || compiled.stdout || "typst compile failed");
-  }
+  run("typst", ["compile", typPath, outPath]);
 
-  const info = spawnSync("pdfinfo", [outPath], { encoding: "utf8" });
-  if (info.status !== 0) {
-    throw new Error(info.stderr || "pdfinfo failed");
-  }
-  const pages = info.stdout.match(/Pages:\s+(\d+)/)?.[1];
+  const pages = run("pdfinfo", [outPath]).match(/Pages:\s+(\d+)/)?.[1];
   if (pages !== "1") {
     throw new Error(`resume.pdf must be 1 page, got ${pages ?? "unknown"}`);
   }
+
+  // Kept on failure so the generated Typst is available for debugging.
+  rmSync(dir, { recursive: true, force: true });
 
   return readFileSync(outPath);
 }
