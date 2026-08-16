@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.2] - 2026-08-16
+
+### Changed
+
+- Light is the default theme for every first visit, including visitors whose OS is in dark mode. An explicit choice still persists in `localStorage`.
+
 ## [1.0.1] - 2026-08-16
 
 ### Fixed

@@ -11,12 +11,6 @@ html {
   color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  html:not([data-theme="light"]) {
-    color-scheme: dark;
-  }
-}
-
 [data-theme="dark"] {
   color-scheme: dark;
 }

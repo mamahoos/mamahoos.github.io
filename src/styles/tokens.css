@@ -32,21 +32,6 @@
   --move: 180ms ease-out;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --color-canvas: #0b1220;
-    --color-background: #0f172a;
-    --color-foreground: #f1f5f9;
-    --color-muted-foreground: #94a3b8;
-    --color-line: #64748b;
-    --color-accent: #2dd4bf;
-    --color-accent-hover: #5eead4;
-    --color-primary: #e2e8f0;
-    --color-on-primary: #0f172a;
-    --color-ring: #2dd4bf;
-  }
-}
-
 [data-theme="dark"] {
   --color-canvas: #0b1220;
   --color-background: #0f172a;
