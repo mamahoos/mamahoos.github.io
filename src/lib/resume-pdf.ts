@@ -7,7 +7,13 @@ import { resume } from "../data/resume";
 const INK = "#141414";
 const MUTED = "#4a4a4a";
 const FAINT = "#6d6d6d";
-const RULE = "#c9c9c9";
+/** Cool hairline. Slightly bluer than a neutral gray so the page temperature matches NAVY. */
+const RULE = "#b8c0cc";
+/**
+ * Ink navy for the name and section headings only. Body, bullets, skills, and
+ * links stay INK so the page still reads as a black document from a metre away.
+ */
+const NAVY = "#1e3a5f";
 
 /**
  * Continuation lines of a wrapped skill row hang under the items, not the
@@ -49,7 +55,7 @@ function header(): string {
 
   return `#align(center)[
   #set par(spacing: 0pt)
-  #text(19pt, weight: "bold", tracking: 0.2pt, ${quote(resume.name)})
+  #text(19pt, weight: "bold", tracking: 0.2pt, fill: rgb("${NAVY}"), ${quote(resume.name)})
   #v(8pt)
   #text(11pt, fill: rgb("${MUTED}"), tracking: 0.3pt, ${quote(resume.role)})
   #v(10pt)
@@ -147,7 +153,7 @@ export function toTypst(): string {
 // which hides the section from an ATS.
 #let section(name) = {
   v(14pt, weak: true)
-  text(9pt, weight: "bold", tracking: 0.8pt, upper(name))
+  text(9pt, weight: "bold", tracking: 0.8pt, fill: rgb("${NAVY}"), upper(name))
   v(3pt)
   line(length: 100%, stroke: 0.6pt + rgb("${RULE}"))
   v(6pt)
