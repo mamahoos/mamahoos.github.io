@@ -77,7 +77,7 @@ export const resume = {
     },
     {
       label: "Storage & data",
-      items: ["PostgreSQL", "Redis", "MinIO"],
+      items: ["PostgreSQL", "Redis", "MinIO", "kafka"],
     },
     {
       label: "IaC & provisioning",
