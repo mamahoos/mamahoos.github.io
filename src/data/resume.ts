@@ -72,7 +72,7 @@ export const resume = {
     },
     {
       label: "CI/CD & GitOps",
-      items: ["GitLab CI", "GitHub Actions", "Jenkins", "Argo CD"],
+      items: ["Advanced Git", "GitLab CI", "GitHub Actions", "Jenkins", "Argo CD"],
     },
     {
       label: "Observability",
