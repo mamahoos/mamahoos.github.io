@@ -73,7 +73,7 @@ export const resume = {
     },
     {
       label: "Observability",
-      items: ["Prometheus", "Grafana", "Loki", "Graylog"],
+      items: ["Prometheus", "Grafana", "Loki", "Graylog", "k6"],
     },
     {
       label: "Storage & data",
