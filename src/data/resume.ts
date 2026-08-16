@@ -84,7 +84,7 @@ export const resume = {
     },
     {
       label: "Virtualization",
-      items: ["VMware vSphere", "ESXi"],
+      items: ["VMware vSphere", "ESXi", "Veeam"],
     },
   ] satisfies SkillGroup[],
   experience: [
