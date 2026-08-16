@@ -26,15 +26,12 @@ function text(value: string): string {
 }
 
 /**
- * Body copy where hyphenated terms must survive line breaks intact, so
- * "Cloud-Init" never renders as "Cloud-" / "Init". A box only constrains
- * layout, so the extracted text stays byte-identical for ATS parsers.
+ * Space above an entry. The first entry of a section contributes nothing,
+ * because the gap under the heading rule belongs to `section()`. Otherwise a
+ * heading ends up closer to the section it terminates than the one it opens.
  */
-function body(value: string): string {
-  return value
-    .split(" ")
-    .map((word) => (word.includes("-") ? `#box[${text(word)}]` : text(word)))
-    .join(" ");
+function entryGap(index: number, gap: string): string {
+  return index === 0 ? "0pt" : gap;
 }
 
 function link(href: string, label: string): string {
@@ -64,9 +61,9 @@ function header(): string {
 function skills(): string {
   return resume.skills
     .map(
-      (group) => `#block(spacing: 3.5pt)[
+      (group, index) => `#block(above: ${entryGap(index, "3.5pt")}, below: 0pt)[
   #set par(hanging-indent: ${SKILL_HANGING_INDENT})
-  #text(weight: "bold", ${quote(`${group.label}:`)}) ${body(group.items.join(", "))}
+  #text(weight: "bold", ${quote(`${group.label}:`)}) ${text(group.items.join(", "))}
 ]`,
     )
     .join("\n");
@@ -74,21 +71,21 @@ function skills(): string {
 
 function experience(): string {
   return resume.experience
-    .map((job) => {
-      const bullets = job.bullets
-        .map((bullet) => `[${body(bullet)}]`)
-        .join(",\n      ");
-      return `#block(above: 9pt, below: 0pt, breakable: false)[
+    .map((job, index) => {
+      const bullets = job.bullets.length
+        ? `#list(
+      ${job.bullets.map((bullet) => `[${text(bullet)}]`).join(",\n      ")},
+  )
+  #v(5pt)`
+        : "";
+      return `#block(above: ${entryGap(index, "9pt")}, below: 0pt, breakable: false)[
   #set par(spacing: 0pt)
   #text(weight: "bold", ${quote(job.title)}) #h(1fr) #text(9pt, fill: rgb("${MUTED}"), ${quote(`${job.start} – ${job.end}`)})
   #v(3.5pt)
   #text(fill: rgb("${MUTED}"), ${quote(job.company)}) #text(9pt, style: "italic", fill: rgb("${FAINT}"), ${quote(`— ${job.domain}`)})
   #v(5pt)
-  #list(
-      ${bullets},
-  )
-  #v(5pt)
-  #text(8.7pt, fill: rgb("${FAINT}"))[#text(style: "italic", ${quote("Technologies: ")})${body(job.technologies.join(", "))}]
+  ${bullets}
+  #text(8.7pt, fill: rgb("${FAINT}"))[#text(style: "italic", ${quote("Technologies: ")})${text(job.technologies.join(", "))}]
 ]`;
     })
     .join("\n");
@@ -101,7 +98,7 @@ function projects(): string {
   #set par(spacing: 0pt)
   #text(weight: "bold", ${quote(project.name)}) #text(9pt, fill: rgb("${FAINT}"))[— ${link(project.href, project.displayUrl)}]
   #v(2.5pt)
-  #text(9.4pt)[${body(project.summary)}]
+  #text(9.4pt, ${quote(project.summary)})
 ]`,
     )
     .join("\n");
@@ -110,7 +107,7 @@ function projects(): string {
 function education(): string {
   return resume.education
     .map(
-      (item) => `#block(above: 0pt, below: 0pt, breakable: false)[
+      (item, index) => `#block(above: ${entryGap(index, "7pt")}, below: 0pt, breakable: false)[
   #set par(spacing: 0pt)
   #text(weight: "bold", ${quote(item.degree)}) #h(1fr) #text(9pt, fill: rgb("${MUTED}"), ${quote(item.end)})
   #v(3pt)
@@ -138,11 +135,19 @@ export function toTypst(): string {
 #set list(marker: text(fill: rgb("${FAINT}"))[•], indent: 0pt, body-indent: 0.6em, spacing: 3.5pt)
 #show link: set text(fill: rgb("${INK}"))
 
+// "hyphenate: false" still lets a line break at an existing hyphen, which
+// renders "Cloud-Init" as "Cloud-" / "Init" and makes pdftotext extract it as
+// "CloudInit". A box constrains layout only, so extracted text is unchanged.
+#show regex("[[:alnum:]]+(-[[:alnum:]]+)+"): it => box(it)
+
 #let sep = text(fill: rgb("${RULE}"))[ | ]
 
+// Tracking must stay low: past roughly 1pt at this size, poppler reads the
+// glyph advance as a word gap and extracts "EDUCATION" as "E D U C AT I O N",
+// which hides the section from an ATS.
 #let section(name) = {
-  v(10pt, weak: true)
-  text(9pt, weight: "bold", tracking: 1.2pt, upper(name))
+  v(14pt, weak: true)
+  text(9pt, weight: "bold", tracking: 0.8pt, upper(name))
   v(3pt)
   line(length: 100%, stroke: 0.6pt + rgb("${RULE}"))
   v(6pt)
@@ -157,7 +162,7 @@ ${skills()}
 ${experience()}
 
 #section[Projects]
-#text(9pt, style: "italic", fill: rgb("${FAINT}"))[${text(`${resume.projectsNoteLead} `)}${link(resume.githubHref, resume.githubDisplay)}]
+#block(above: 0pt, below: 0pt)[#text(9pt, style: "italic", fill: rgb("${FAINT}"))[${text(`${resume.projectsNoteLead} `)}${link(resume.githubHref, resume.githubDisplay)}]]
 ${projects()}
 
 #section[Education]
