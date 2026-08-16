@@ -120,8 +120,8 @@ export const resume = {
         "Contributed to backend system design, microservices architecture, and PostgreSQL modeling for a fintech asset platform",
         "Designed CI/CD pipelines for backend, frontend, and Flutter services, including automated APK artifacts on every push",
         "Ran self-hosted GitLab, GitLab Runner, and Jenkins so build and release did not depend on external SaaS",
-        "Built internal package mirrors and organizational VPNs so software delivery continued during nationwide internet disruption",
-        "Deployed Docker, Docker Swarm, and Kubernetes on VMware vSphere; automated Linux provisioning with Cloud-Init and ran k6 load tests",
+        "Built internal package mirrors via Nexus and Nginx and organizational VPNs so software delivery continued during nationwide internet disruption",
+        "Deployed Docker, Docker Swarm on VMware vSphere; automated Linux provisioning with Cloud-Init and ran k6 load tests",
         "Implemented Prometheus, Grafana, and Graylog for metrics and centralized logs; configured Nginx as reverse proxy and load balancer",
       ],
       technologies: [
