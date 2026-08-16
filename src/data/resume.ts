@@ -108,6 +108,8 @@ export const resume = {
         "Loki",
         "Prometheus",
         "Grafana",
+        "Graylog",
+        "Network+",
       ],
     },
     {
