@@ -27,9 +27,9 @@ It needs `infra_proxy_net` and `infra_db_net` to already exist. Compose does not
 Two services, two jobs:
 
 ```text
-Internet
-   │
-   ▼
+              Internet
+                 │
+                 ▼
         Traefik (infra-traefik)
        /                      \
       /                        \
