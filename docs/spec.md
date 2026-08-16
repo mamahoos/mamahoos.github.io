@@ -13,6 +13,7 @@ A static engineering portfolio at `https://portfolio.mamahoos.ir` for technical 
 - npm
 - Node 24
 - Docker (dev and CI toolchain only)
+- Typst (resume PDF in the same Docker image)
 - GitHub Actions → GitHub Pages
 
 No React, Tailwind, MDX, backend, or database in v1.
@@ -30,6 +31,8 @@ No React, Tailwind, MDX, backend, or database in v1.
 ```
 src/components     UI pieces
 src/data           Typed site and resume source of truth
+src/lib            Resume PDF rendering
+src/integrations   Build hooks
 src/layouts        Page shell
 src/pages          Routes
 src/styles         Tokens and global CSS
@@ -53,9 +56,9 @@ v1 verification is `astro check` and `astro build` inside the Docker image. No u
 
 ## Boundaries
 
-- Always: keep secrets out of git; run `astro check` before treating a slice as done; do not invent metrics or extra repositories; treat `src/data/resume.ts` as the resume source of truth (not a PDF).
-- Ask first: new runtime dependencies, extra pages besides `/resume`, PDF generation toolchain.
-- Never: put theme, roadmap, or career narrative in README; call the owner senior; list every GitHub repo; run a container as production; put a photo, birth date, gender, marital status, military status, or salary on `/resume`.
+- Always: keep secrets out of git; run `astro check` before treating a slice as done; do not invent metrics or extra repositories; treat `src/data/resume.ts` as the resume source of truth (not a PDF); do not commit generated `resume.pdf`.
+- Ask first: new runtime dependencies, extra pages besides `/resume`.
+- Never: put theme, roadmap, or career narrative in README; call the owner senior; list every GitHub repo; run a container as production; put a photo, birth date, gender, marital status, military status, or salary on `/resume` or the resume PDF.
 
 ## Success Criteria
 
@@ -66,7 +69,8 @@ v1 verification is `astro check` and `astro build` inside the Docker image. No u
 - GitHub Actions builds in the same Docker image and deploys Pages
 - `site` is `https://portfolio.mamahoos.ir` with no `base`
 - `/resume` renders from `src/data/resume.ts` with role DevOps / Platform Engineer, phone, and skills including MinIO, Argo CD, and Loki
+- `astro build` writes a 1-page text-based `dist/resume.pdf` from the same resume data
 
 ## Out of scope (v1)
 
-PDF generation, a separate `/about` page, blog, GSAP, Lighthouse CI, `resume.mamahoos.ir`.
+A separate `/about` page, blog, GSAP, Lighthouse CI, `resume.mamahoos.ir`, Word/docx resume.
