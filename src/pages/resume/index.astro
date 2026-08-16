@@ -1,0 +1,269 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { resume } from "../../data/resume";
+
+const title = `${resume.name} · Resume`;
+const description = `${resume.role}. ${resume.tagline}`;
+---
+
+<Layout title={title} description={description}>
+  <article class="resume">
+    <header class="resume__mast">
+      <h1>{resume.name}</h1>
+      <p class="resume__role">{resume.role}</p>
+      <p class="resume__tagline">{resume.tagline}</p>
+    </header>
+
+    <section class="resume__section" aria-labelledby="skills-heading">
+      <h2 id="skills-heading">Technical Skills</h2>
+      <ul class="resume__skills">
+        {
+          resume.skills.map((group) => (
+            <li>
+              <span class="resume__skill-label">{group.label}</span>
+              <span>{group.items.join(", ")}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="resume__section" aria-labelledby="experience-heading">
+      <h2 id="experience-heading">Professional Experience</h2>
+      {
+        resume.experience.map((job) => (
+          <article class="resume__job">
+            <header class="resume__job-head">
+              <h3>
+                {job.title}, {job.company}
+              </h3>
+              <p class="resume__dates">
+                <time>{job.start}</time>
+                <span aria-hidden="true"> – </span>
+                <time>{job.end}</time>
+              </p>
+              <p class="resume__domain">{job.domain}</p>
+            </header>
+            <ul>
+              {job.bullets.map((bullet) => (
+                <li>{bullet}</li>
+              ))}
+            </ul>
+            <p class="resume__tech">
+              <span class="resume__tech-label">Technologies:</span>
+              {job.technologies.join(", ")}
+            </p>
+          </article>
+        ))
+      }
+    </section>
+
+    <section class="resume__section" aria-labelledby="projects-heading">
+      <h2 id="projects-heading">Projects</h2>
+      <p class="resume__projects-note">
+        {resume.projectsNoteLead}{" "}
+        <a href={resume.githubHref}>{resume.githubDisplay}</a>
+      </p>
+      <ul class="resume__projects">
+        {
+          resume.projects.map((project) => (
+            <li>
+              <p class="resume__project-head">
+                <a href={project.href}>{project.name}</a>
+                <span aria-hidden="true"> — </span>
+                <span class="resume__project-url">{project.displayUrl}</span>
+              </p>
+              <p>{project.summary}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="resume__section" aria-labelledby="education-heading">
+      <h2 id="education-heading">Education</h2>
+      {
+        resume.education.map((item) => (
+          <div class="resume__edu">
+            <h3>{item.degree}</h3>
+            <p class="resume__dates">{item.end}</p>
+            <p class="resume__domain">{item.school}</p>
+          </div>
+        ))
+      }
+    </section>
+  </article>
+</Layout>
+
+<style>
+  .resume {
+    max-width: var(--measure);
+  }
+
+  .resume__mast {
+    margin-bottom: var(--space-8);
+  }
+
+  h1 {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-title);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+    text-wrap: balance;
+  }
+
+  .resume__role {
+    margin: var(--space-2) 0 0;
+    color: var(--color-muted-foreground);
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+  }
+
+  .resume__tagline {
+    margin: var(--space-3) 0 0;
+  }
+
+  .resume__section + .resume__section {
+    margin-top: var(--space-8);
+  }
+
+  h2 {
+    margin: 0 0 var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-line);
+    color: var(--color-muted-foreground);
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+    font-weight: 500;
+  }
+
+  .resume__skills {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .resume__skills li {
+    display: grid;
+    grid-template-columns: minmax(8.5rem, 11rem) minmax(0, 1fr);
+    column-gap: var(--space-3);
+    align-items: baseline;
+  }
+
+  .resume__skills li + li {
+    margin-top: var(--space-2);
+  }
+
+  .resume__skill-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+    font-weight: 500;
+  }
+
+  .resume__job + .resume__job,
+  .resume__edu {
+    margin-top: var(--space-6);
+  }
+
+  .resume__job-head,
+  .resume__edu {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: var(--space-4);
+    row-gap: var(--space-1);
+    align-items: baseline;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: var(--text-body);
+    font-weight: 500;
+    overflow-wrap: anywhere;
+  }
+
+  .resume__dates {
+    margin: 0;
+    color: var(--color-muted-foreground);
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+    white-space: nowrap;
+  }
+
+  .resume__domain {
+    grid-column: 1 / -1;
+    margin: 0;
+    color: var(--color-muted-foreground);
+  }
+
+  .resume__job ul {
+    margin: var(--space-3) 0 0;
+    padding-left: 1.25rem;
+  }
+
+  .resume__job li + li {
+    margin-top: var(--space-2);
+  }
+
+  .resume__tech {
+    margin: var(--space-3) 0 0;
+    color: var(--color-muted-foreground);
+    font-size: var(--text-small);
+  }
+
+  .resume__tech-label {
+    font-family: var(--font-mono);
+    font-weight: 500;
+  }
+
+  .resume__projects-note {
+    margin: 0 0 var(--space-4);
+    color: var(--color-muted-foreground);
+  }
+
+  .resume__projects {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .resume__projects li + li {
+    margin-top: var(--space-4);
+  }
+
+  .resume__project-head {
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .resume__project-url {
+    color: var(--color-muted-foreground);
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+    font-weight: 400;
+  }
+
+  .resume__projects p {
+    margin: var(--space-1) 0 0;
+  }
+
+  @media (max-width: 39.99rem) {
+    .resume__skills li,
+    .resume__job-head,
+    .resume__edu {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .resume__dates {
+      white-space: normal;
+    }
+  }
+
+  @media print {
+    .resume {
+      max-width: none;
+    }
+  }
+</style>
