@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.1] - 2026-08-16
+
+### Fixed
+
+- Site frame and section rules are a 1px CSS line. Unicode box-drawing corners and T-caps no longer sit on that hairline, so the 1px step at every junction is gone.
+
 ## [1.0.0] - 2026-08-16
 
 First public release of [portfolio.mamahoos.ir](https://portfolio.mamahoos.ir). The site is no longer marked as a demo.
