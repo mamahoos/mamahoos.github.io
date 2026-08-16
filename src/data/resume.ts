@@ -64,7 +64,6 @@ export const resume = {
         "Docker Swarm",
         "Nginx",
         "Network+",
-        "VPN",
       ],
     },
     {
