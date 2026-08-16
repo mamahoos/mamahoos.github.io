@@ -1,8 +1,6 @@
-# portfolio (Demo)
+# portfolio
 
 Static site for [portfolio.mamahoos.ir](https://portfolio.mamahoos.ir).
-
-This is a demo. The copy and projects on the site are not the final content.
 
 ## Requirements
 
