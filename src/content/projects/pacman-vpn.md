@@ -92,10 +92,6 @@ CD ships compose and config templates. It does **not** ship `.env` or client rec
 
 A separate Cloudflare workflow checks proxied DNS, zone SSL mode, and HTTP smoke against the admin path and the edge host.
 
-## Migration
-
-Tests assert the stack is PasarGuard and **not** `ghcr.io/mhsanaei/3x-ui`. Env names like `XUI_DOMAIN` are leftover vocabulary from the previous panel; the runtime is not.
-
 ## What this demonstrates
 
 Attaching a workload to shared edge and data networks, terminating TLS in one place, pinning images, and treating deploy as backup → replace → smoke → rollback.
