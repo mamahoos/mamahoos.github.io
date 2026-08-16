@@ -68,7 +68,7 @@ export const resume = {
     },
     {
       label: "Network",
-      items: ["Network+", "MikroTik"],
+      items: ["Network+", "MikroTik", "VPN architectures"],
     },
     {
       label: "CI/CD & GitOps",
