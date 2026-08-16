@@ -12,6 +12,15 @@ const description = `${resume.role}. ${resume.tagline}`;
       <h1>{resume.name}</h1>
       <p class="resume__role">{resume.role}</p>
       <p class="resume__tagline">{resume.tagline}</p>
+      <p class="resume__actions">
+        <a
+          class="cmd-link"
+          href="/resume.pdf"
+          download="Mohammad-Hosein-Kouhkan-resume.pdf"
+        >
+          <span aria-hidden="true">[ </span>PDF<span aria-hidden="true"> ]</span>
+        </a>
+      </p>
     </header>
 
     <section class="resume__section" aria-labelledby="skills-heading">
@@ -124,6 +133,17 @@ const description = `${resume.role}. ${resume.tagline}`;
 
   .resume__tagline {
     margin: var(--space-3) 0 0;
+  }
+
+  .resume__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
+    margin: var(--space-4) 0 0;
+  }
+
+  .resume__actions .cmd-link {
+    color: var(--color-accent);
   }
 
   .resume__section + .resume__section {

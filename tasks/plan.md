@@ -46,7 +46,7 @@ Ship a static Astro portfolio with a Docker toolchain for local and CI, ASCII-mi
 ## Phase 4: Resume
 
 - [x] Task 6: Typed resume source of truth and `/resume` HTML
-- PDF artifact still waits on an explicit toolchain choice (Typst or Playwright)
+- [x] Task 7: ATS resume PDF via Typst at `dist/resume.pdf`
 
 ## Risks and Mitigations
 
@@ -58,4 +58,4 @@ Ship a static Astro portfolio with a Docker toolchain for local and CI, ASCII-mi
 
 ## Open Questions
 
-None for the HTML resume. PDF generation waits on an explicit toolchain choice.
+None for the HTML resume and PDF artifact.
