@@ -15,17 +15,6 @@ const projects = await getFeaturedProjects();
   <p class="role">{site.role}</p>
   <h1>{site.name}</h1>
   <p class="tagline">{site.tagline}</p>
-  <p class="actions">
-    <a class="cmd-link" href="/projects">
-      <span aria-hidden="true">[ </span>Projects<span aria-hidden="true"> ]</span>
-    </a>
-    <a class="cmd-link" href="/resume">
-      <span aria-hidden="true">[ </span>Resume<span aria-hidden="true"> ]</span>
-    </a>
-    <a class="cmd-link" href={site.github}>
-      <span aria-hidden="true">[ </span>GitHub<span aria-hidden="true"> ]</span>
-    </a>
-  </p>
 
   <AsciiSplit />
 
@@ -39,6 +28,7 @@ const projects = await getFeaturedProjects();
             index={project.data.order}
             title={project.data.title}
             meta={project.data.category}
+            summary={project.data.summary}
           />
         </li>
       ))
@@ -68,23 +58,6 @@ const projects = await getFeaturedProjects();
   .tagline {
     max-width: var(--measure);
     margin: 0;
-  }
-
-  .actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2) var(--space-4);
-    margin: var(--space-6) 0 0;
-  }
-
-  .actions .cmd-link {
-    color: var(--color-accent);
-  }
-
-  @media (min-width: 40rem) {
-    .actions {
-      gap: var(--space-4) var(--space-6);
-    }
   }
 
   h2 {
