@@ -1,7 +1,8 @@
 ---
 title: airbar-finance
-summary: Go finance service for ledger, escrow, wallet, and Zibal payments, with gRPC, Postgres, Redis, and Compose environments for dev, staging, and production.
-category: Backend systems
+summary: A dedicated Go finance service — ledger, escrow, wallet, and PSP callbacks — with dependency direction, idempotency, and a real promotion path.
+type: service
+category: Software architecture
 repo: https://github.com/mamahoos/airbar-finance
 stack:
   - Go
@@ -10,21 +11,73 @@ stack:
   - gRPC
   - Docker Compose
 featured: true
-order: 2
+order: 5
 ---
 
-## Problem
+Airbar needed ledger entries, escrow, wallet balances, withdrawals, and payment-provider callbacks as their own service — not a module buried in the main application.
 
-Airbar needed a dedicated finance service for ledger entries, escrow, wallet balances, withdrawals, and PSP callbacks — not a payment module buried in the main app.
+This repository is that service. It has its own schema (`finance.*`), its own image, and its own deploy path.
+
+## Why a separate finance service?
+
+Financial writes have different failure modes from ordinary HTTP handlers. A PSP may retry the same callback. Ledger rows should not be an afterthought of the product API.
+
+Splitting the service isolates:
+
+- the public HTTP surface Zibal needs for browser redirects
+- gRPC contracts consumed by `airbar-core`
+- migrations and readiness probes that can fail without taking the rest of the product down
+
+The cost is operational: another compose overlay, another health endpoint, another deploy.
 
 ## Architecture
 
-The repo follows a clean architecture layout: `domain` holds entities and ports, `usecase` holds interactors, `delivery` exposes gRPC and a small HTTP surface (`/health/ready`, Zibal callback), and `infrastructure` implements Postgres, Redis, and Zibal adapters.
+Dependency direction is the architecture:
 
-Compose files exist for development, staging, and production. CI runs `go mod verify`, `go vet`, `go test`, and `go build`.
+```text
+delivery
+   ↓
+usecase
+   ↓
+domain
+   ↑
+infrastructure
+```
 
-## Decisions
+`domain` does not import gRPC, pgx, Redis, or Zibal. Infrastructure implements the ports the domain declares. `cmd/server` is the composition root.
 
-- Keep domain free of gRPC and driver imports.
-- Use idempotency as a cross-cutting use case rather than scattering it in handlers.
-- Treat Compose overlays as the promotion path instead of a single “works on my machine” file.
+Inbound adapters:
+
+| Surface | Role |
+|---|---|
+| gRPC | Escrow, payments, wallet, withdrawal, treasury, reconciliation, credit |
+| HTTP | `GET /health/ready`, Zibal callback |
+
+Health on both surfaces pings Postgres and Redis before calling the process ready.
+
+## Idempotency
+
+A payment provider may send the same callback more than once. That is not a transport quirk to handle in one handler.
+
+Mutating gRPC methods go through a unary interceptor. The key comes from metadata or the request body. The guard:
+
+1. looks in Redis (`idempotency:{key}`, 24h TTL)
+2. on miss, `INSERT … ON CONFLICT DO NOTHING` in `finance.idempotency_records`
+3. replays a stored snapshot, or runs the handler and completes
+4. on handler failure, deletes the in-flight row
+
+> **Operational note**
+>
+> Postgres is the source of truth. Redis is a hot cache of snapshots, not the authorization to run the side effect twice.
+
+Read RPCs and the HTTP Zibal callback are not behind that interceptor.
+
+## Delivery
+
+Compose overlays share a base file. Dev builds locally and exposes ports. Staging and production pull GHCR and join a shared `airbar-net`; they do **not** bundle Postgres or Redis.
+
+CI on the self-hosted runner: `go mod verify`, `go vet`, `go test`, `go build`, goose-backed integration tests, `govulncheck`. Staging deploy runs migrations and probes `/health/ready`.
+
+## What this demonstrates
+
+Software architecture that survives contact with money: ports and adapters, a split transport surface, idempotency as a use case, and promotion via compose overlays rather than a single “works here” file.

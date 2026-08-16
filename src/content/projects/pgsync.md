@@ -1,25 +1,53 @@
 ---
 title: pgsync
-summary: One-shot PostgreSQL copy via pg_dump piped to psql, with an rsync-shaped CLI and installable bash completion.
+summary: A deliberately small wrapper around pg_dump piped to psql — rsync-shaped flags, safer defaults, and nothing else.
+type: developer-tool
 category: Automation
 repo: https://github.com/mamahoos/pgsync
 stack:
   - Bash
   - PostgreSQL
 featured: true
-order: 3
+order: 4
 ---
 
-## Problem
+> A deliberately boring tool.
 
-Copying a database between two Postgres instances usually means remembering `pg_dump` flags, `ON_ERROR_STOP`, and whether stdout is safe to wrap. That is easy to get wrong in a hurry.
+Copying a database between two Postgres instances is easy to get wrong in a hurry: dump flags, `ON_ERROR_STOP`, and whether logs contaminate the dump stream.
 
-## Architecture
+The problem did not need a service, a framework, or a container.
 
-`pgsync.sh` takes source and target URIs, runs `pg_dump | psql`, and keeps status messages on stderr so the dump stream never mixes with logs. An installer places the binary and bash completion under a configurable prefix.
+## Why a Bash script?
 
-## Decisions
+PostgreSQL already provides the primitive:
 
-- Mirror a few rsync flags (`-n`, `--delete`, `-q`) so the mental model is familiar.
-- Default to `--no-owner` and `--no-privileges` so restores do not drag source roles onto the target.
-- Stay a single script plus completion rather than a framework.
+```text
+pg_dump | psql
+```
+
+`pgsync` wraps that primitive with safer defaults, URI source/target, bash completion, and a few flags people already know from rsync.
+
+The interesting decision was knowing what **not** to build. There is no incremental mode. This is always a full logical dump/restore.
+
+## The pipe is the interface
+
+All status goes to stderr. stdout is reserved for the dump. A dry-run prints the quoted pipeline and exits.
+
+`psql` runs with `ON_ERROR_STOP=1`. Unless `--no-clean`, dump uses `--clean --if-exists`. Every dump uses `--no-owner --no-privileges` so restores do not drag source roles onto the target.
+
+`--delete` is a separate, explicit pre-step: `DROP SCHEMA public CASCADE` then `CREATE SCHEMA public`.
+
+## rsync-shaped CLI
+
+| Flag | Behavior |
+|---|---|
+| `-n` | Print the pipeline; do not run it |
+| `--delete` | Recreate `public` on the target first |
+| `-q` / `-v` | Quiet / show the exact command |
+| `--schema-only` / `--data-only` | Narrow the dump |
+
+Completion lives in `completions/pgsync.bash` and does not require `bash-completion.deb`. `install.sh` places the binary and the completion file under a configurable prefix.
+
+## What this demonstrates
+
+Operational restraint: a one-shot, auditable script with Unix I/O discipline, instead of a platform around a two-command pipeline.

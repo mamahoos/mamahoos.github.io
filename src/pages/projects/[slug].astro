@@ -23,6 +23,7 @@ const { Content } = await render(project);
       <span aria-hidden="true">[ </span>Projects<span aria-hidden="true"> ]</span>
     </a>
   </p>
+  <p class="type">{project.data.type.replace("-", " ")}</p>
   <p class="category">{project.data.category}</p>
   <h1>{project.data.title}</h1>
   <p class="summary">{project.data.summary}</p>
@@ -50,12 +51,18 @@ const { Content } = await render(project);
     margin: 0 0 var(--space-4);
   }
 
+  .type,
   .category,
   .stack {
     margin: 0;
     color: var(--color-muted-foreground);
     font-family: var(--font-mono);
     font-size: var(--text-small);
+  }
+
+  .type {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
   }
 
   h1 {
@@ -92,28 +99,116 @@ const { Content } = await render(project);
     }
   }
 
-  .body :global(h2) {
+  .body {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .body :global(h2),
+  .body :global(h3) {
     margin: 0 0 var(--space-3);
     font-family: var(--font-mono);
-    font-size: 1.125rem;
     font-weight: 500;
   }
 
-  .body :global(h2:not(:first-child)) {
+  .body :global(h2) {
+    font-size: 1.125rem;
+  }
+
+  .body :global(h3) {
+    font-size: var(--text-body);
+  }
+
+  .body :global(h2:not(:first-child)),
+  .body :global(h3) {
     margin-top: var(--space-8);
   }
 
-  .body :global(p) {
+  .body :global(h2 + h3) {
+    margin-top: var(--space-4);
+  }
+
+  .body :global(p),
+  .body :global(li) {
     max-width: var(--measure);
+  }
+
+  .body :global(p) {
     margin: 0 0 var(--space-4);
   }
 
-  .body :global(p:last-child) {
+  .body :global(ul),
+  .body :global(ol) {
+    margin: 0 0 var(--space-4);
+    padding-left: 1.25rem;
+  }
+
+  .body :global(li + li) {
+    margin-top: var(--space-2);
+  }
+
+  .body :global(blockquote) {
+    max-width: var(--measure);
+    margin: 0 0 var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    border-left: 2px solid var(--color-line);
+    color: var(--color-muted-foreground);
+  }
+
+  .body :global(blockquote p:last-child) {
     margin-bottom: 0;
+  }
+
+  .body :global(pre) {
+    overflow-x: auto;
+    max-width: 100%;
+    margin: 0 0 var(--space-4);
+    padding: var(--space-4);
+    border: 1px solid var(--color-line);
+    background: var(--color-canvas);
+    font-size: var(--text-small);
+    line-height: 1.45;
   }
 
   .body :global(code) {
     font-family: var(--font-mono);
     font-size: 0.9em;
+    overflow-wrap: anywhere;
+  }
+
+  .body :global(pre code) {
+    font-size: inherit;
+  }
+
+  .body :global(table) {
+    width: max-content;
+    max-width: 100%;
+    margin: 0 0 var(--space-4);
+    border-collapse: collapse;
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+  }
+
+  .body :global(th),
+  .body :global(td) {
+    padding: var(--space-2) var(--space-3);
+    border-bottom: 1px solid var(--color-line);
+    text-align: start;
+    vertical-align: top;
+  }
+
+  .body :global(th) {
+    color: var(--color-muted-foreground);
+    font-weight: 500;
+  }
+
+  .body :global(hr) {
+    margin: var(--space-8) 0;
+    border: 0;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .body :global(strong) {
+    font-weight: 500;
   }
 </style>
