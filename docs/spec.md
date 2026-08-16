@@ -68,8 +68,8 @@ v1 verification is `astro check` and `astro build` inside the Docker image. No u
 - Six featured projects with real GitHub links and honest case studies
 - GitHub Actions builds in the same Docker image and deploys Pages
 - `site` is `https://portfolio.mamahoos.ir` with no `base`
-- `/resume` renders from `src/data/resume.ts` with role DevOps / Platform Engineer, phone, and skills including MinIO, Argo CD, and Loki
-- `astro build` writes a 1-page text-based `dist/resume.pdf` from the same resume data
+- `/resume` renders from `src/data/resume.ts` with role DevOps / Platform Engineer and skills including MinIO, Argo CD, and Loki. The HTML page does not repeat the contact line; header and footer are the site chrome, and the PDF carries phone plus the full ATS contact row
+- `astro build` writes a 1-page text-based `dist/resume.pdf` from the same resume data, including phone
 
 ## Out of scope (v1)
 
