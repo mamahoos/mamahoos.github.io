@@ -1,7 +1,6 @@
 export const site = {
   name: "Mohammad Hosein Kouhkan",
   handle: "mamahoos",
-  demo: false,
   role: "DevOps / Platform Engineer",
   tagline:
     "Software engineer who designs infrastructure and automates reliable production systems.",

@@ -1,6 +1,5 @@
 ---
 import ThemeToggle from "./ThemeToggle.astro";
-import DemoMark from "./DemoMark.astro";
 import { site } from "../data/site";
 
 const path = Astro.url.pathname;
@@ -9,7 +8,6 @@ const path = Astro.url.pathname;
 <header class="site-header">
   <a class="site-header__mark" href="/">
     <span class="site-header__handle">{site.handle}</span>
-    <DemoMark />
   </a>
   <nav aria-label="Primary">
     <ul>
@@ -71,16 +69,6 @@ const path = Astro.url.pathname;
   .site-header__mark:focus-visible {
     color: var(--color-accent);
     text-decoration: underline;
-  }
-
-  .site-header__mark:hover :global(.demo-mark),
-  .site-header__mark:focus-visible :global(.demo-mark) {
-    color: var(--color-accent);
-  }
-
-  .site-header__mark:hover :global(.demo-mark__paren),
-  .site-header__mark:focus-visible :global(.demo-mark__paren) {
-    color: var(--color-accent-hover);
   }
 
   nav ul {
