@@ -5,6 +5,7 @@ RUN apt-get update \
     ca-certificates \
     curl \
     fonts-crosextra-carlito \
+    fonts-lato \
     fonts-liberation \
     poppler-utils \
     xz-utils \
