@@ -29,6 +29,7 @@ No React, Tailwind, MDX, backend, or database in v1.
 
 ```
 src/components     UI pieces
+src/data           Typed site and resume source of truth
 src/layouts        Page shell
 src/pages          Routes
 src/styles         Tokens and global CSS
@@ -52,9 +53,9 @@ v1 verification is `astro check` and `astro build` inside the Docker image. No u
 
 ## Boundaries
 
-- Always: keep secrets out of git; run `astro check` before treating a slice as done; do not invent metrics or extra repositories.
-- Ask first: new runtime dependencies, extra pages, `/resume`.
-- Never: put theme, roadmap, or career narrative in README; call the owner senior; list every GitHub repo; run a container as production.
+- Always: keep secrets out of git; run `astro check` before treating a slice as done; do not invent metrics or extra repositories; treat `src/data/resume.ts` as the resume source of truth (not a PDF).
+- Ask first: new runtime dependencies, extra pages besides `/resume`, PDF generation toolchain.
+- Never: put theme, roadmap, or career narrative in README; call the owner senior; list every GitHub repo; run a container as production; put a photo, birth date, gender, marital status, military status, or salary on `/resume`.
 
 ## Success Criteria
 
@@ -64,7 +65,8 @@ v1 verification is `astro check` and `astro build` inside the Docker image. No u
 - Six featured projects with real GitHub links and honest case studies
 - GitHub Actions builds in the same Docker image and deploys Pages
 - `site` is `https://portfolio.mamahoos.ir` with no `base`
+- `/resume` renders from `src/data/resume.ts` with role DevOps / Platform Engineer, phone, and skills including MinIO, Argo CD, and Loki
 
 ## Out of scope (v1)
 
-`/resume`, a separate `/about` page, blog, GSAP, Lighthouse CI, `resume.mamahoos.ir`.
+PDF generation, a separate `/about` page, blog, GSAP, Lighthouse CI, `resume.mamahoos.ir`.
