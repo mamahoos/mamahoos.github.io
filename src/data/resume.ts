@@ -63,6 +63,7 @@ export const resume = {
         "Kubernetes",
         "Docker Swarm",
         "Nginx",
+        "Traefik",
       ],
     },
     {
