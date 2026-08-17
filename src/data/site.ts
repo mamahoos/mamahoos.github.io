@@ -5,10 +5,11 @@ export const site = {
   tagline:
     "Software engineer who designs infrastructure and automates reliable production systems.",
   /**
-   * Homepage only. Not the meta description, not /resume, not the PDF.
+   * Homepage body only. Not the meta description (that is `tagline`),
+   * not `/resume`, not the PDF. How I think, not who I am.
    */
   principle:
-    "Good infrastructure is noticed when it is missing. I am not looking for an answer; I am looking for a model that can produce the next ones.",
+    "I look for the cause, not the symptom, and I design for the next scale, not the current fire. I am not looking for an answer; I am looking for a model that can produce the next ones.",
   email: "me@mamahoos.ir",
   github: "https://github.com/mamahoos",
   linkedin: "https://www.linkedin.com/in/mamahoos",

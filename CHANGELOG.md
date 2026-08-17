@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.4] - 2026-08-17
+
+### Changed
+
+- Homepage principle is cause and model, not the infrastructure proverb. The tagline stays the meta description so `/` and `/resume` do not repeat the same positioning paragraph.
+
 ## [1.1.3] - 2026-08-17
 
 ### Added

@@ -40,7 +40,6 @@ export type Education = {
 export const resume = {
   name: site.name,
   role: site.role,
-  tagline: site.tagline,
   /**
    * Short positioning for /resume and the PDF. Not years of employment:
    * years of designing and building systems. Freelance and independent
