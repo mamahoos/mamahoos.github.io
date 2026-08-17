@@ -1,12 +1,18 @@
 # portfolio
 
-Static site for [portfolio.mamahoos.ir](https://portfolio.mamahoos.ir). `resume.mamahoos.ir` is an optional shortcut to `/resume/`.
+```
+mamahoos.github.io
+        |  Pages
+        v
+portfolio.mamahoos.ir     the site
+        ^
+        |  301
+resume.mamahoos.ir        /resume/
+```
 
-## Requirements
+CI builds in Docker and deploys Pages. Then dnscontrol updates Cloudflare: `portfolio` is grey-cloud A records to GitHub; `resume` is an orange-cloud CNAME plus a 301 to `/resume/`.
 
-- Docker and Docker Compose
-
-## Commands
+## Dev
 
 ```bash
 docker compose up
@@ -17,4 +23,4 @@ docker compose run --rm web npm run check
 docker compose run --rm web npm run build
 ```
 
-The site is served on `http://localhost:4321` during development. Production is the `dist/` output deployed to GitHub Pages.
+http://localhost:4321

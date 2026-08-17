@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.1] - 2026-08-17
+
+### Changed
+
+- README maps `mamahoos.github.io`, `portfolio.mamahoos.ir`, and `resume.mamahoos.ir` in a few lines.
+
 ## [1.1.0] - 2026-08-17
 
 ### Added
