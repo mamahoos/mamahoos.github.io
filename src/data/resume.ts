@@ -47,7 +47,7 @@ export const resume = {
    * roles stay folded into Experience until they are ready to split.
    */
   summary:
-    "Six years designing and building systems — software, Linux, and infrastructure — across independent work, public projects, and professional roles.",
+    "Five years of learning to design and build systems from scratch — software, Linux, and infrastructure — across independent work, public projects, and professional roles.",
   email: site.email,
   phone: "+989906502794",
   phoneDisplay: "+98 990 650 2794",
