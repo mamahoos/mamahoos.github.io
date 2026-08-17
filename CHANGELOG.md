@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.0] - 2026-08-17
+
+### Changed
+
+- Canonical host is `mamahoos.ir`. `portfolio.mamahoos.ir` 301s there and keeps the path. `resume.mamahoos.ir` 301s to `/resume/`.
+
 ## [1.1.4] - 2026-08-17
 
 ### Changed

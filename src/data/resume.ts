@@ -73,8 +73,8 @@ export const resume = {
   githubDisplay: displayUrl(site.github),
   linkedinHref: site.linkedin,
   linkedinDisplay: displayUrl(site.linkedin),
-  portfolioHref: "https://portfolio.mamahoos.ir",
-  portfolioDisplay: "portfolio.mamahoos.ir",
+  portfolioHref: "https://mamahoos.ir",
+  portfolioDisplay: "mamahoos.ir",
   skills: [
     {
       label: "Languages",
