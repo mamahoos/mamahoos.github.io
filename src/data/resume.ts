@@ -50,13 +50,12 @@ export const resume = {
     "Five years of learning to design and build systems from scratch — software, Linux, and infrastructure — across independent work, public projects, and professional roles.",
   /**
    * HTML /resume only. A path so a human sees backend roots without a
-   * second Experience block. Do not render this in the PDF: arrows and a
-   * year range look like employment to an ATS. 2021 and Present are
-   * gutters, not job dates. The HTML continues after freelance — the
-   * turn from software into systems — with a shell `\`.
+   * second Experience block, labeled as origin not current stack. Do
+   * not render this in the PDF: arrows look like employment to an ATS.
+   * The HTML continues after freelance — software into systems — with
+   * a hanging shell `\`.
    */
-  practicePathFrom: "2021",
-  practicePathUntil: "Present",
+  practicePathLabel: "How I got here",
   practicePath: [
     "programming",
     "backend / asyncio",

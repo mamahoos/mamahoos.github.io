@@ -6,7 +6,6 @@ const title = `${resume.name} · Resume`;
 const description = `${resume.role}. ${resume.summary}`;
 const pathLead = resume.practicePath.slice(0, resume.practicePathBreakAfter);
 const pathRest = resume.practicePath.slice(resume.practicePathBreakAfter);
-const pathLabel = `Practice path ${resume.practicePathFrom} to ${resume.practicePathUntil}: ${resume.practicePath.join(", ")}`;
 ---
 
 <Layout title={title} description={description}>
@@ -15,16 +14,14 @@ const pathLabel = `Practice path ${resume.practicePathFrom} to ${resume.practice
       <h1>{resume.name}</h1>
       <p class="resume__role">{resume.role}</p>
       <p class="resume__summary">{resume.summary}</p>
-      <div class="resume__path" role="group" aria-label={pathLabel}>
-        <span class="resume__path-year">{resume.practicePathFrom}</span>
+      <div class="resume__path" role="group" aria-labelledby="practice-path-label">
+        <p class="resume__path-label" id="practice-path-label">{resume.practicePathLabel}</p>
         <span class="resume__path-steps">
           {pathLead.join(" → ")}
           <span class="resume__path-cont" aria-hidden="true"> → \</span>
         </span>
-        <span class="resume__path-year" aria-hidden="true"></span>
-        <span class="resume__path-steps">
+        <span class="resume__path-steps resume__path-steps--cont">
           {pathRest.join(" → ")}
-          <span class="resume__path-now">{resume.practicePathUntil}</span>
         </span>
       </div>
       <p class="resume__actions">
@@ -152,12 +149,12 @@ const pathLabel = `Practice path ${resume.practicePathFrom} to ${resume.practice
   }
 
   .resume__path {
-    display: grid;
-    grid-template-columns: 4ch 1fr;
-    column-gap: var(--space-4);
-    row-gap: 0.15em;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     max-width: 100%;
     margin: var(--space-3) 0 0;
+    gap: 0.15em;
     overflow-x: auto;
     color: var(--color-muted-foreground);
     font-family: var(--font-mono);
@@ -165,22 +162,22 @@ const pathLabel = `Practice path ${resume.practicePathFrom} to ${resume.practice
     line-height: 1.5;
   }
 
-  .resume__path-year,
-  .resume__path-now {
+  .resume__path-label {
+    margin: 0 0 var(--space-2);
     color: var(--color-foreground);
-    font-variant-numeric: tabular-nums;
+    font-weight: 500;
   }
 
   .resume__path-steps {
     white-space: nowrap;
   }
 
-  .resume__path-cont {
-    color: var(--color-line);
+  .resume__path-steps--cont {
+    padding-inline-start: 4ch;
   }
 
-  .resume__path-now {
-    margin-inline-start: var(--space-4);
+  .resume__path-cont {
+    color: var(--color-line);
   }
 
   .resume__actions {
