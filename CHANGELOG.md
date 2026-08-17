@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.3] - 2026-08-17
+
+### Added
+
+- A short systems-practice summary on `/resume` and the PDF: five years of learning to design and build systems from scratch. It is not years of employment. Experience stays one list.
+
 ## [1.0.2] - 2026-08-16
 
 ### Changed
