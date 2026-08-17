@@ -14,7 +14,6 @@ const projects = await getFeaturedProjects();
 >
   <p class="role">{site.role}</p>
   <h1>{site.name}</h1>
-  <p class="tagline">{site.tagline}</p>
   <p class="principle">{site.principle}</p>
 
   <AsciiSplit />
@@ -56,14 +55,9 @@ const projects = await getFeaturedProjects();
     text-wrap: balance;
   }
 
-  .tagline {
-    max-width: var(--measure);
-    margin: 0;
-  }
-
   .principle {
     max-width: var(--measure);
-    margin: var(--space-3) 0 0;
+    margin: 0;
     color: var(--color-muted-foreground);
   }
 

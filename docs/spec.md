@@ -65,7 +65,7 @@ v1 verification is `astro check` and `astro build` inside the Docker image. No u
 
 - `docker compose up` serves the site
 - Image build produces `dist/`
-- Homepage shows Mohammad Hosein Kouhkan, handle `mamahoos`, role, profile one-liner, a short principle under the tagline, and contacts. The principle is homepage-only: not `/resume`, not the PDF, and not the meta description.
+- Homepage shows Mohammad Hosein Kouhkan, handle `mamahoos`, role, a short principle (how I think), and contacts. The tagline is the meta description only. The principle is homepage-only: not `/resume`, not the PDF. `/resume` and the PDF keep the systems-practice summary and do not repeat the principle or the tagline.
 - Six featured projects with real GitHub links and honest case studies
 - GitHub Actions builds in the same Docker image and deploys Pages
 - `site` is `https://portfolio.mamahoos.ir` with no `base`. `resume.mamahoos.ir` is not a second site.
