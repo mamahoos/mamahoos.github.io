@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.4] - 2026-08-17
+
+### Added
+
+- A labeled “How I got here” path on the HTML `/resume` only: programming through microservices and DevOps to platform. It is origin, not current stack, and it is not on the PDF.
+
 ## [1.0.3] - 2026-08-17
 
 ### Added
