@@ -48,6 +48,20 @@ export const resume = {
    */
   summary:
     "Five years of learning to design and build systems from scratch — software, Linux, and infrastructure — across independent work, public projects, and professional roles.",
+  /**
+   * HTML /resume only. A one-line path so a human sees backend roots
+   * without a second Experience block. Do not render this in the PDF:
+   * arrows and a year range look like employment to an ATS.
+   */
+  practicePath: [
+    "2021 programming",
+    "backend / asyncio",
+    "freelance",
+    "Linux",
+    "infrastructure",
+    "CI/CD",
+    "platform",
+  ],
   email: site.email,
   phone: "+989906502794",
   phoneDisplay: "+98 990 650 2794",

@@ -12,6 +12,20 @@ const description = `${resume.role}. ${resume.summary}`;
       <h1>{resume.name}</h1>
       <p class="resume__role">{resume.role}</p>
       <p class="resume__summary">{resume.summary}</p>
+      <ol class="resume__path" aria-label="Practice path from 2021">
+        {
+          resume.practicePath.map((step, index) => (
+            <li>
+              {index > 0 && (
+                <span class="resume__path-sep" aria-hidden="true">
+                  →
+                </span>
+              )}
+              <span>{step}</span>
+            </li>
+          ))
+        }
+      </ol>
       <p class="resume__actions">
         <a
           class="cmd-link"
@@ -134,6 +148,30 @@ const description = `${resume.role}. ${resume.summary}`;
   .resume__summary {
     max-width: var(--measure);
     margin: var(--space-3) 0 0;
+  }
+
+  .resume__path {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    max-width: 42rem;
+    margin: var(--space-3) 0 0;
+    padding: 0;
+    color: var(--color-muted-foreground);
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+    line-height: 1.6;
+    list-style: none;
+  }
+
+  .resume__path li {
+    display: inline-flex;
+    align-items: baseline;
+  }
+
+  .resume__path-sep {
+    margin: 0 0.4em;
+    color: var(--color-line);
   }
 
   .resume__actions {
