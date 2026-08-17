@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.2] - 2026-08-17
+
+### Changed
+
+- On narrow viewports, the HTML resume path stacks one step per line so it no longer overflows the frame.
+
 ## [1.1.1] - 2026-08-17
 
 ### Changed
