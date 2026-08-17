@@ -6,6 +6,7 @@ const title = `${resume.name} · Resume`;
 const description = `${resume.role}. ${resume.summary}`;
 const pathLead = resume.practicePath.slice(0, resume.practicePathBreakAfter);
 const pathRest = resume.practicePath.slice(resume.practicePathBreakAfter);
+const pathLabel = `Practice path ${resume.practicePathFrom} to ${resume.practicePathUntil}: ${resume.practicePath.join(", ")}`;
 ---
 
 <Layout title={title} description={description}>
@@ -14,15 +15,17 @@ const pathRest = resume.practicePath.slice(resume.practicePathBreakAfter);
       <h1>{resume.name}</h1>
       <p class="resume__role">{resume.role}</p>
       <p class="resume__summary">{resume.summary}</p>
-      <div class="resume__path" role="group" aria-label={`Practice path: ${resume.practicePath.join(", ")}`}>
-        <p class="resume__path-line">
+      <div class="resume__path" role="group" aria-label={pathLabel}>
+        <span class="resume__path-year">{resume.practicePathFrom}</span>
+        <span class="resume__path-steps">
           {pathLead.join(" → ")}
-          <span aria-hidden="true"> → …</span>
-        </p>
-        <p class="resume__path-line">
-          <span aria-hidden="true">… → </span>
+          <span class="resume__path-cont" aria-hidden="true"> → \</span>
+        </span>
+        <span class="resume__path-year" aria-hidden="true"></span>
+        <span class="resume__path-steps">
           {pathRest.join(" → ")}
-        </p>
+          <span class="resume__path-now">{resume.practicePathUntil}</span>
+        </span>
       </div>
       <p class="resume__actions">
         <a
@@ -149,20 +152,35 @@ const pathRest = resume.practicePath.slice(resume.practicePathBreakAfter);
   }
 
   .resume__path {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.15em;
+    display: grid;
+    grid-template-columns: 4ch 1fr;
+    column-gap: var(--space-4);
+    row-gap: 0.15em;
+    max-width: 100%;
     margin: var(--space-3) 0 0;
+    overflow-x: auto;
     color: var(--color-muted-foreground);
     font-family: var(--font-mono);
     font-size: var(--text-small);
     line-height: 1.5;
   }
 
-  .resume__path-line {
-    margin: 0;
+  .resume__path-year,
+  .resume__path-now {
+    color: var(--color-foreground);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .resume__path-steps {
     white-space: nowrap;
+  }
+
+  .resume__path-cont {
+    color: var(--color-line);
+  }
+
+  .resume__path-now {
+    margin-inline-start: var(--space-4);
   }
 
   .resume__actions {

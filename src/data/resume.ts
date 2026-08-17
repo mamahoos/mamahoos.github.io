@@ -51,20 +51,23 @@ export const resume = {
   /**
    * HTML /resume only. A path so a human sees backend roots without a
    * second Experience block. Do not render this in the PDF: arrows and a
-   * year range look like employment to an ATS. The HTML wraps after
-   * freelance — the turn from software into systems — so the line does
-   * not break mid-step.
+   * year range look like employment to an ATS. 2021 and Present are
+   * gutters, not job dates. The HTML continues after freelance — the
+   * turn from software into systems — with a shell `\`.
    */
+  practicePathFrom: "2021",
+  practicePathUntil: "Present",
   practicePath: [
-    "2021 programming",
+    "programming",
     "backend / asyncio",
+    "microservices",
     "freelance",
     "Linux",
     "infrastructure",
-    "CI/CD",
+    "DevOps",
     "platform",
   ],
-  practicePathBreakAfter: 3,
+  practicePathBreakAfter: 4,
   email: site.email,
   phone: "+989906502794",
   phoneDisplay: "+98 990 650 2794",
