@@ -41,6 +41,13 @@ export const resume = {
   name: site.name,
   role: site.role,
   tagline: site.tagline,
+  /**
+   * Short positioning for /resume and the PDF. Not years of employment:
+   * years of designing and building systems. Freelance and independent
+   * roles stay folded into Experience until they are ready to split.
+   */
+  summary:
+    "Six years designing and building systems — software, Linux, and infrastructure — across independent work, public projects, and professional roles.",
   email: site.email,
   phone: "+989906502794",
   phoneDisplay: "+98 990 650 2794",

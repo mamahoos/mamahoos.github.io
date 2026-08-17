@@ -3,7 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import { resume } from "../../data/resume";
 
 const title = `${resume.name} · Resume`;
-const description = `${resume.role}. ${resume.tagline}`;
+const description = `${resume.role}. ${resume.summary}`;
 ---
 
 <Layout title={title} description={description}>
@@ -11,7 +11,7 @@ const description = `${resume.role}. ${resume.tagline}`;
     <header class="resume__mast">
       <h1>{resume.name}</h1>
       <p class="resume__role">{resume.role}</p>
-      <p class="resume__tagline">{resume.tagline}</p>
+      <p class="resume__summary">{resume.summary}</p>
       <p class="resume__actions">
         <a
           class="cmd-link"
@@ -131,7 +131,8 @@ const description = `${resume.role}. ${resume.tagline}`;
     font-size: var(--text-small);
   }
 
-  .resume__tagline {
+  .resume__summary {
+    max-width: var(--measure);
     margin: var(--space-3) 0 0;
   }
 

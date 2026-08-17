@@ -58,7 +58,9 @@ function header(): string {
   #text(19pt, weight: "bold", tracking: 0.2pt, fill: rgb("${NAVY}"), ${quote(resume.name)})
   #v(8pt)
   #text(11pt, fill: rgb("${MUTED}"), tracking: 0.3pt, ${quote(resume.role)})
-  #v(10pt)
+  #v(6pt)
+  #block(width: 92%)[#set par(leading: 0.68em); #text(9.5pt, ${quote(resume.summary)})]
+  #v(8pt)
   #text(9.5pt, fill: rgb("${MUTED}"))[${contact}]
 ]
 #v(6pt)`;
@@ -152,7 +154,7 @@ export function toTypst(): string {
 // glyph advance as a word gap and extracts "EDUCATION" as "E D U C AT I O N",
 // which hides the section from an ATS.
 #let section(name) = {
-  v(14pt, weak: true)
+  v(11pt, weak: true)
   text(9pt, weight: "bold", tracking: 0.8pt, fill: rgb("${NAVY}"), upper(name))
   v(3pt)
   line(length: 100%, stroke: 0.6pt + rgb("${RULE}"))
