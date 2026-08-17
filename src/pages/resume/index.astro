@@ -6,6 +6,9 @@ const title = `${resume.name} · Resume`;
 const description = `${resume.role}. ${resume.summary}`;
 const pathLead = resume.practicePath.slice(0, resume.practicePathBreakAfter);
 const pathRest = resume.practicePath.slice(resume.practicePathBreakAfter);
+// Keep the wrap mark out of JSX. A template like {" \\"} lets the
+// backslash eat the closer, so astro check reports a broken </span>.
+const pathWrapMark = " \\";
 ---
 
 <Layout title={title} description={description}>
@@ -19,7 +22,7 @@ const pathRest = resume.practicePath.slice(resume.practicePathBreakAfter);
         <p class="resume__path-lines">
           <span class="resume__path-steps">
             {pathLead.join(" → ")}
-            <span class="resume__path-cont" aria-hidden="true">{" \\"}</span>
+            <span class="resume__path-cont" aria-hidden="true">{pathWrapMark}</span>
           </span>
           <span class="resume__path-steps resume__path-steps--cont">
             {pathRest.join(" → ")}
