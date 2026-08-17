@@ -1,11 +1,5 @@
 # Changelog
 
-## [1.0.5] - 2026-08-17
-
-### Fixed
-
-- `astro check` on `/resume` failed because a JSX string used `\\` to print a shell wrap mark; the backslash ate the closing quote.
-
 ## [1.0.4] - 2026-08-17
 
 ### Added
