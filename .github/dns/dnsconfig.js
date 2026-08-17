@@ -8,17 +8,33 @@ var CF_PROXY_OFF = { cloudflare_proxy: "off" };
 var CF_PROXY_ON = { cloudflare_proxy: "on" };
 
 D("mamahoos.ir", REG_NONE, DnsProvider(CLOUDFLARE), NO_PURGE,
-  A("portfolio", "185.199.108.153", TTL(1), CF_PROXY_OFF),
-  A("portfolio", "185.199.109.153", TTL(1), CF_PROXY_OFF),
-  A("portfolio", "185.199.110.153", TTL(1), CF_PROXY_OFF),
-  A("portfolio", "185.199.111.153", TTL(1), CF_PROXY_OFF),
+  // Canonical site. Grey-cloud so GitHub can issue the Pages cert.
+  // https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-an-apex-domain
+  A("@", "185.199.108.153", TTL(1), CF_PROXY_OFF),
+  A("@", "185.199.109.153", TTL(1), CF_PROXY_OFF),
+  A("@", "185.199.110.153", TTL(1), CF_PROXY_OFF),
+  A("@", "185.199.111.153", TTL(1), CF_PROXY_OFF),
+
+  // Old hostname. Keep the A records (NO_PURGE would leave them if
+  // swapped for a CNAME) and orange-cloud so the 301 can fire.
+  A("portfolio", "185.199.108.153", TTL(1), CF_PROXY_ON),
+  A("portfolio", "185.199.109.153", TTL(1), CF_PROXY_ON),
+  A("portfolio", "185.199.110.153", TTL(1), CF_PROXY_ON),
+  A("portfolio", "185.199.111.153", TTL(1), CF_PROXY_ON),
+  CF_SINGLE_REDIRECT(
+    "301 portfolio.mamahoos.ir to mamahoos.ir",
+    301,
+    'http.host eq "portfolio.mamahoos.ir"',
+    'concat("https://mamahoos.ir", http.request.uri.path)'
+  ),
+
   // Shortcut only. Orange-cloud so the Single Redirect can fire.
-  // Canonical site stays portfolio.mamahoos.ir on GitHub Pages.
-  CNAME("resume", "portfolio.mamahoos.ir.", CF_PROXY_ON),
+  // Not a GitHub Pages custom domain.
+  CNAME("resume", "mamahoos.ir.", CF_PROXY_ON),
   CF_SINGLE_REDIRECT(
     "shortcut resume.mamahoos.ir to /resume/",
     301,
     'http.host eq "resume.mamahoos.ir"',
-    'concat("https://portfolio.mamahoos.ir/resume/", "")'
+    'concat("https://mamahoos.ir/resume/", "")'
   ),
 );

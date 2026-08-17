@@ -2,7 +2,7 @@
 
 ## Objective
 
-A static engineering portfolio at `https://portfolio.mamahoos.ir` for technical recruiters, hiring managers, and engineers. It should answer who this person is, what kind of work they do, and where the evidence lives.
+A static engineering portfolio at `https://mamahoos.ir` for technical recruiters, hiring managers, and engineers. It should answer who this person is, what kind of work they do, and where the evidence lives.
 
 ## Tech Stack
 
@@ -68,7 +68,7 @@ v1 verification is `astro check` and `astro build` inside the Docker image. No u
 - Homepage shows Mohammad Hosein Kouhkan, handle `mamahoos`, role, a short principle (how I think), and contacts. The tagline is the meta description only. The principle is homepage-only: not `/resume`, not the PDF. `/resume` and the PDF keep the systems-practice summary and do not repeat the principle or the tagline.
 - Six featured projects with real GitHub links and honest case studies
 - GitHub Actions builds in the same Docker image and deploys Pages
-- `site` is `https://portfolio.mamahoos.ir` with no `base`. `resume.mamahoos.ir` is not a second site.
+- `site` is `https://mamahoos.ir` with no `base`. `resume.mamahoos.ir` and `portfolio.mamahoos.ir` are not a second site.
 - `/resume` renders from `src/data/resume.ts` with role DevOps / Platform Engineer, a short systems-practice summary (not years of employment), and skills including MinIO, Argo CD, and Loki. The HTML page does not repeat the contact line; header and footer are the site chrome, and the PDF carries phone plus the full ATS contact row. A labeled practice path may appear on the HTML page only: title “How I got here”, steps through microservices and DevOps, and no year range. Wide viewports keep a hanging shell `\` after freelance; narrow viewports stack one step per line and drop the wrap mark. It must not appear in the PDF.
 - `astro build` writes a 1-page text-based `dist/resume.pdf` from the same resume data, including phone
 
@@ -78,9 +78,12 @@ A separate `/about` page, blog, GSAP, Lighthouse CI, Word/docx resume.
 
 ## v2
 
-`resume.mamahoos.ir` is an optional 301 shortcut to `https://portfolio.mamahoos.ir/resume/`. The canonical hostname is still `portfolio.mamahoos.ir`. The shortcut may go unused. It is not a second Pages site and must not be added as a GitHub Pages custom domain.
+The canonical hostname is `mamahoos.ir` on GitHub Pages. `resume.mamahoos.ir` and `portfolio.mamahoos.ir` are optional 301 shortcuts. They are not a second Pages site and must not be added as GitHub Pages custom domains.
 
-- DNS: proxied CNAME `resume` → `portfolio.mamahoos.ir` (Cloudflare orange cloud). `portfolio` stays DNS-only to GitHub Pages.
-- Redirect: Cloudflare Single Redirect, managed by dnscontrol (`CF_SINGLE_REDIRECT`). Host equals `resume.mamahoos.ir`; 301 to `https://portfolio.mamahoos.ir/resume/`. Path and query are dropped.
+- DNS: apex `mamahoos.ir` is DNS-only A records to GitHub Pages. Grey cloud so GitHub can issue the certificate.
+- `portfolio.mamahoos.ir`: same GitHub A records, orange-cloud, Single Redirect 301 to `https://mamahoos.ir` plus the request path. Kept as A records (not CNAME) because `NO_PURGE` would leave the old A records behind.
+- `resume.mamahoos.ir`: proxied CNAME → `mamahoos.ir`. Single Redirect 301 to `https://mamahoos.ir/resume/`. Path and query are dropped.
+- Redirects are Cloudflare Single Redirects, managed by dnscontrol (`CF_SINGLE_REDIRECT`).
 - The Cloudflare API token needs Zone → Single Redirect → Edit in addition to DNS Edit.
 - dnscontrol owns Single Redirects for `mamahoos.ir`; extra dashboard redirects would be deleted on push.
+- MX and other records not in this repo stay (`NO_PURGE`).
