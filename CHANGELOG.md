@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.3] - 2026-08-17
+
+### Added
+
+- Homepage has a short principle under the tagline. It is not on `/resume` or the PDF.
+
 ## [1.1.2] - 2026-08-17
 
 ### Changed
