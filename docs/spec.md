@@ -80,7 +80,7 @@ A separate `/about` page, blog, GSAP, Lighthouse CI, Word/docx resume.
 
 The canonical hostname is `mamahoos.ir` on GitHub Pages. `resume.mamahoos.ir` and `portfolio.mamahoos.ir` are optional 301 shortcuts. They are not a second Pages site and must not be added as GitHub Pages custom domains.
 
-- DNS: apex `mamahoos.ir` is DNS-only A records to GitHub Pages. Grey cloud so GitHub can issue the certificate.
+- DNS: apex `mamahoos.ir` is DNS-only A records to GitHub Pages. Grey cloud so GitHub can issue the certificate. `www.mamahoos.ir` is a DNS-only CNAME to `mamahoos.github.io`; GitHub redirects it to the apex. Do not CNAME `www` to the apex.
 - `portfolio.mamahoos.ir`: same GitHub A records, orange-cloud, Single Redirect 301 to `https://mamahoos.ir` plus the request path. Kept as A records (not CNAME) because `NO_PURGE` would leave the old A records behind.
 - `resume.mamahoos.ir`: proxied CNAME → `mamahoos.ir`. Single Redirect 301 to `https://mamahoos.ir/resume/`. Path and query are dropped.
 - Redirects are Cloudflare Single Redirects, managed by dnscontrol (`CF_SINGLE_REDIRECT`).
