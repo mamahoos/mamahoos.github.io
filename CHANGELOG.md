@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.1] - 2026-08-17
+
+### Fixed
+
+- `www.mamahoos.ir` has a grey-cloud CNAME to `mamahoos.github.io` so GitHub Pages can retrieve the DNS record.
+
 ## [1.2.0] - 2026-08-17
 
 ### Changed

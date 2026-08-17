@@ -11,7 +11,7 @@ portfolio.mamahoos.ir     old host (path kept)
 resume.mamahoos.ir        /resume/
 ```
 
-CI builds in Docker and deploys Pages. Then dnscontrol updates Cloudflare: apex `mamahoos.ir` is grey-cloud A records to GitHub; `portfolio` is an orange-cloud 301 to the apex; `resume` is an orange-cloud CNAME plus a 301 to `/resume/`.
+CI builds in Docker and deploys Pages. Then dnscontrol updates Cloudflare: apex `mamahoos.ir` is grey-cloud A records to GitHub; `www` is a grey-cloud CNAME to `mamahoos.github.io`; `portfolio` is an orange-cloud 301 to the apex; `resume` is an orange-cloud CNAME plus a 301 to `/resume/`.
 
 ## Dev
 

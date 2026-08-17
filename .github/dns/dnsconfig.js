@@ -14,6 +14,10 @@ D("mamahoos.ir", REG_NONE, DnsProvider(CLOUDFLARE), NO_PURGE,
   A("@", "185.199.109.153", TTL(1), CF_PROXY_OFF),
   A("@", "185.199.110.153", TTL(1), CF_PROXY_OFF),
   A("@", "185.199.111.153", TTL(1), CF_PROXY_OFF),
+  // GitHub Pages always checks www when the custom domain is the apex.
+  // Point at github.io, not the apex, or HTTPS enforce breaks.
+  // https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-an-apex-domain-and-the-www-subdomain-variant
+  CNAME("www", "mamahoos.github.io.", CF_PROXY_OFF),
 
   // Old hostname. Keep the A records (NO_PURGE would leave them if
   // swapped for a CNAME) and orange-cloud so the 301 can fire.
