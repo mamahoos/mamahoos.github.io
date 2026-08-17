@@ -4,6 +4,8 @@ import { resume } from "../../data/resume";
 
 const title = `${resume.name} · Resume`;
 const description = `${resume.role}. ${resume.summary}`;
+const pathLead = resume.practicePath.slice(0, resume.practicePathBreakAfter);
+const pathRest = resume.practicePath.slice(resume.practicePathBreakAfter);
 ---
 
 <Layout title={title} description={description}>
@@ -12,20 +14,16 @@ const description = `${resume.role}. ${resume.summary}`;
       <h1>{resume.name}</h1>
       <p class="resume__role">{resume.role}</p>
       <p class="resume__summary">{resume.summary}</p>
-      <ol class="resume__path" aria-label="Practice path from 2021">
-        {
-          resume.practicePath.map((step, index) => (
-            <li>
-              {index > 0 && (
-                <span class="resume__path-sep" aria-hidden="true">
-                  →
-                </span>
-              )}
-              <span>{step}</span>
-            </li>
-          ))
-        }
-      </ol>
+      <div class="resume__path" role="group" aria-label={`Practice path: ${resume.practicePath.join(", ")}`}>
+        <p class="resume__path-line">
+          {pathLead.join(" → ")}
+          <span aria-hidden="true"> → …</span>
+        </p>
+        <p class="resume__path-line">
+          <span aria-hidden="true">… → </span>
+          {pathRest.join(" → ")}
+        </p>
+      </div>
       <p class="resume__actions">
         <a
           class="cmd-link"
@@ -152,26 +150,19 @@ const description = `${resume.role}. ${resume.summary}`;
 
   .resume__path {
     display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    max-width: 42rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.15em;
     margin: var(--space-3) 0 0;
-    padding: 0;
     color: var(--color-muted-foreground);
     font-family: var(--font-mono);
     font-size: var(--text-small);
-    line-height: 1.6;
-    list-style: none;
+    line-height: 1.5;
   }
 
-  .resume__path li {
-    display: inline-flex;
-    align-items: baseline;
-  }
-
-  .resume__path-sep {
-    margin: 0 0.4em;
-    color: var(--color-line);
+  .resume__path-line {
+    margin: 0;
+    white-space: nowrap;
   }
 
   .resume__actions {
