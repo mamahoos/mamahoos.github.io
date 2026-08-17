@@ -16,13 +16,15 @@ const pathRest = resume.practicePath.slice(resume.practicePathBreakAfter);
       <p class="resume__summary">{resume.summary}</p>
       <div class="resume__path" role="group" aria-labelledby="practice-path-label">
         <p class="resume__path-label" id="practice-path-label">{resume.practicePathLabel}</p>
-        <span class="resume__path-steps">
-          {pathLead.join(" → ")}
-          <span class="resume__path-cont" aria-hidden="true"> → \</span>
-        </span>
-        <span class="resume__path-steps resume__path-steps--cont">
-          {pathRest.join(" → ")}
-        </span>
+        <p class="resume__path-lines">
+          <span class="resume__path-steps">
+            {pathLead.join(" → ")}
+            <span class="resume__path-cont" aria-hidden="true">{" \\"}</span>
+          </span>
+          <span class="resume__path-steps resume__path-steps--cont">
+            {pathRest.join(" → ")}
+          </span>
+        </p>
       </div>
       <p class="resume__actions">
         <a
@@ -149,13 +151,7 @@ const pathRest = resume.practicePath.slice(resume.practicePathBreakAfter);
   }
 
   .resume__path {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    max-width: 100%;
-    margin: var(--space-3) 0 0;
-    gap: 0.15em;
-    overflow-x: auto;
+    margin: var(--space-6) 0 0;
     color: var(--color-muted-foreground);
     font-family: var(--font-mono);
     font-size: var(--text-small);
@@ -163,9 +159,14 @@ const pathRest = resume.practicePath.slice(resume.practicePathBreakAfter);
   }
 
   .resume__path-label {
-    margin: 0 0 var(--space-2);
-    color: var(--color-foreground);
+    margin: 0;
     font-weight: 500;
+  }
+
+  .resume__path-lines {
+    display: flex;
+    flex-direction: column;
+    margin: var(--space-2) 0 0;
   }
 
   .resume__path-steps {
@@ -176,15 +177,11 @@ const pathRest = resume.practicePath.slice(resume.practicePathBreakAfter);
     padding-inline-start: 4ch;
   }
 
-  .resume__path-cont {
-    color: var(--color-line);
-  }
-
   .resume__actions {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-2) var(--space-4);
-    margin: var(--space-4) 0 0;
+    margin: var(--space-6) 0 0;
   }
 
   .resume__actions .cmd-link {
