@@ -15,6 +15,7 @@ A static engineering portfolio at `https://portfolio.mamahoos.ir` for technical 
 - Docker (dev and CI toolchain only)
 - Typst (resume PDF in the same Docker image)
 - GitHub Actions → GitHub Pages
+- dnscontrol (Cloudflare DNS + Single Redirects) on deploy
 
 No React, Tailwind, MDX, backend, or database in v1.
 
@@ -67,10 +68,19 @@ v1 verification is `astro check` and `astro build` inside the Docker image. No u
 - Homepage shows Mohammad Hosein Kouhkan, handle `mamahoos`, role, profile one-liner, and contacts
 - Six featured projects with real GitHub links and honest case studies
 - GitHub Actions builds in the same Docker image and deploys Pages
-- `site` is `https://portfolio.mamahoos.ir` with no `base`
+- `site` is `https://portfolio.mamahoos.ir` with no `base`. `resume.mamahoos.ir` is not a second site.
 - `/resume` renders from `src/data/resume.ts` with role DevOps / Platform Engineer, a short systems-practice summary (not years of employment), and skills including MinIO, Argo CD, and Loki. The HTML page does not repeat the contact line; header and footer are the site chrome, and the PDF carries phone plus the full ATS contact row. A labeled practice path may appear on the HTML page only: title “How I got here”, steps through microservices and DevOps, a hanging shell `\` after freelance, and no year range. It must not appear in the PDF.
 - `astro build` writes a 1-page text-based `dist/resume.pdf` from the same resume data, including phone
 
 ## Out of scope (v1)
 
-A separate `/about` page, blog, GSAP, Lighthouse CI, `resume.mamahoos.ir`, Word/docx resume.
+A separate `/about` page, blog, GSAP, Lighthouse CI, Word/docx resume.
+
+## v2
+
+`resume.mamahoos.ir` is an optional 301 shortcut to `https://portfolio.mamahoos.ir/resume/`. The canonical hostname is still `portfolio.mamahoos.ir`. The shortcut may go unused. It is not a second Pages site and must not be added as a GitHub Pages custom domain.
+
+- DNS: proxied CNAME `resume` → `portfolio.mamahoos.ir` (Cloudflare orange cloud). `portfolio` stays DNS-only to GitHub Pages.
+- Redirect: Cloudflare Single Redirect, managed by dnscontrol (`CF_SINGLE_REDIRECT`). Host equals `resume.mamahoos.ir`; 301 to `https://portfolio.mamahoos.ir/resume/`. Path and query are dropped.
+- The Cloudflare API token needs Zone → Single Redirect → Edit in addition to DNS Edit.
+- dnscontrol owns Single Redirects for `mamahoos.ir`; extra dashboard redirects would be deleted on push.

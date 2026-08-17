@@ -20,3 +20,10 @@
   - Acceptance: workflow builds in the same image, uploads Pages artifact, CNAME present
   - Verify: workflow file + `public/CNAME` + `astro.config.ts` `site`
   - Files: `.github/workflows/deploy.yml`, `public/CNAME`, `astro.config.ts`
+
+## v2
+
+- [ ] Task 8: `resume.mamahoos.ir` 301 shortcut to `/resume/`
+  - Acceptance: proxied CNAME + dnscontrol Single Redirect; portfolio stays canonical; not a Pages custom domain
+  - Verify: after deploy, `curl -I https://resume.mamahoos.ir` is 301 to `https://portfolio.mamahoos.ir/resume/`
+  - Files: `.github/dns/dnsconfig.js`, `docs/spec.md`

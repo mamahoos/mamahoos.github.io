@@ -59,3 +59,9 @@ Ship a static Astro portfolio with a Docker toolchain for local and CI, ASCII-mi
 ## Open Questions
 
 None for the HTML resume and PDF artifact.
+
+## v2: Resume shortcut
+
+- Canonical site stays `portfolio.mamahoos.ir` on GitHub Pages (grey cloud).
+- `resume.mamahoos.ir` is a proxied CNAME plus a Cloudflare Single Redirect (301) to `/resume/`.
+- dnscontrol owns that redirect. Do not add the hostname to GitHub Pages.

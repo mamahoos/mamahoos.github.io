@@ -1,6 +1,6 @@
 # portfolio
 
-Static site for [portfolio.mamahoos.ir](https://portfolio.mamahoos.ir).
+Static site for [portfolio.mamahoos.ir](https://portfolio.mamahoos.ir). `resume.mamahoos.ir` is an optional shortcut to `/resume/`.
 
 ## Requirements
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.0] - 2026-08-17
+
+### Added
+
+- `resume.mamahoos.ir` is an optional 301 shortcut to `https://portfolio.mamahoos.ir/resume/`. The canonical site is still `portfolio.mamahoos.ir`.
+
 ## [1.0.4] - 2026-08-17
 
 ### Added
