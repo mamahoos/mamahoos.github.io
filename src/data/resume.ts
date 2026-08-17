@@ -42,11 +42,12 @@ export const resume = {
   role: site.role,
   /**
    * Short positioning for /resume and the PDF. Not years of employment:
-   * years of designing and building systems. Freelance and independent
-   * roles stay folded into Experience until they are ready to split.
+   * years of designing and building systems. Freelance stays in the
+   * HTML path, not this lede, and independent roles stay folded into
+   * Experience until they are ready to split.
    */
   summary:
-    "Five years of learning to design and build systems from scratch — software, Linux, and infrastructure — across independent work, public projects, and professional roles.",
+    "Five years designing and building systems — software, Linux, and infrastructure — through independent work, public projects, and professional roles. Platform engineering is the current form of that work, not the beginning.",
   /**
    * HTML /resume only. A path so a human sees backend roots without a
    * second Experience block, labeled as origin not current stack. Do
