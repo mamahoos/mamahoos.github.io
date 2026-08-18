@@ -125,7 +125,7 @@ export const resume = {
       start: "Jul 2026",
       end: "Present",
       bullets: [
-        "Operate Linux, container, and CI/CD platform infrastructure for production software delivery in an analytics company",
+        "Operate Linux, container, and CI/CD platform infrastructure for production software delivery",
         "Expand GitOps, object storage, and log pipelines with Argo CD, MinIO, and Loki alongside Prometheus and Grafana",
       ],
       technologies: [
@@ -148,12 +148,12 @@ export const resume = {
       start: "Oct 2025",
       end: "Apr 2026",
       bullets: [
-        "Contributed to backend system design, microservices architecture, and PostgreSQL modeling for a fintech asset platform",
-        "Designed CI/CD pipelines for backend, frontend, and Flutter services, including automated APK artifacts on every push",
+        "Contributed to backend system design, microservices architecture, and PostgreSQL data modeling",
+        "Designed CI/CD pipelines for backend, frontend, and Flutter services, with automated APK artifacts per push",
         "Ran self-hosted GitLab, GitLab Runner, and Jenkins so build and release did not depend on external SaaS",
-        "Built internal package mirrors via Nexus and Nginx and organizational VPNs so software delivery continued during nationwide internet disruption",
-        "Deployed Docker, Docker Swarm on VMware vSphere; automated Linux provisioning with Cloud-Init and ran k6 load tests",
-        "Implemented Prometheus, Grafana, and Graylog for metrics and centralized logs; configured Nginx as reverse proxy and load balancer",
+        "Built Nexus package mirrors and organizational VPNs so delivery survived nationwide internet disruption",
+        "Deployed Docker Swarm on VMware vSphere, automated Linux provisioning with Cloud-Init, and ran k6 load tests",
+        "Set up Prometheus, Grafana, and Graylog for metrics and logs; ran Nginx as reverse proxy and load balancer",
       ],
       technologies: [
         "PostgreSQL",
