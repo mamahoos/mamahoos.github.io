@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.3.0] - 2026-08-18
+
+### Changed
+
+- PDF skill labels sit in a fixed 1.3in column so the value lists align like the HTML page, instead of running inline with only a hanging indent.
+- PDF sections, skill rows, bullets, and projects all breathe: section gaps 10pt to 16pt, bullet spacing 0 to 6pt, and a 7pt gap before each `Technologies:` line, so no paragraph touches the next heading.
+- Page margins narrow to 0.6in x 0.5in. The wider measure is what pays for the spacing above — every line that ended one word short was costing a full line.
+- Experience bullets tightened so each fits one line. No claim was dropped; the redundant company domain came out of two bullets, since the entry header already states it.
+
 ## [1.2.6] - 2026-08-18
 
 ### Changed

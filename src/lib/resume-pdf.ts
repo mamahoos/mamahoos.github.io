@@ -16,12 +16,22 @@ const RULE = "#b8c0cc";
 const NAVY = "#1e3a5f";
 
 /**
- * Continuation lines of a wrapped skill row hang under the items, not the
- * label. The label is kept inline rather than in a fixed column because a
- * column gap makes `pdftotext` emit every label before every value list,
- * which breaks category/skill association for ATS parsers.
+ * Skill labels sit in a fixed column so the value lists align, matching the
+ * HTML page. Width is the longest label (`IaC & provisioning:`, 83.6pt at 10pt
+ * bold) plus a gutter.
+ *
+ * Any gutter wider than ~0.9in makes `pdftotext` default mode read the block as
+ * two columns and emit every label before every value list. That is accepted
+ * here: the PDF content stream keeps label/value order per row, so extractors
+ * that follow stream order (PDFBox, Tika) and `pdftotext -layout` both pair
+ * them correctly, and keyword presence is unaffected either way. Right-aligning
+ * the labels would collapse the gutter and satisfy every mode, but it leaves the
+ * section with a ragged left edge against every other hard-left section.
+ *
+ * The matching hanging indent keeps a wrapped row under its values, not its
+ * label.
  */
-const SKILL_HANGING_INDENT = "1.1em";
+const SKILL_LABEL_COLUMN = "1.3in";
 
 function quote(value: string): string {
   return `"${value.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;
@@ -81,9 +91,9 @@ function summary(): string {
 function skills(): string {
   return resume.skills
     .map(
-      (group, index) => `#block(above: ${entryGap(index, "3pt")}, below: 0pt)[
-  #set par(hanging-indent: ${SKILL_HANGING_INDENT})
-  #text(weight: "bold", ${quote(`${group.label}:`)}) ${text(group.items.join(", "))}
+      (group, index) => `#block(above: ${entryGap(index, "5pt")}, below: 0pt)[
+  #set par(hanging-indent: ${SKILL_LABEL_COLUMN})
+  #box(width: ${SKILL_LABEL_COLUMN})[#text(weight: "bold", ${quote(`${group.label}:`)})]${text(group.items.join(", "))}
 ]`,
     )
     .join("\n");
@@ -94,11 +104,12 @@ function experience(): string {
     .map((job, index) => {
       const bullets = job.bullets.length
         ? `#list(
+    spacing: 6pt,
       ${job.bullets.map((bullet) => `[${text(bullet)}]`).join(",\n      ")},
   )
-  #v(5pt)`
+  #v(7pt)`
         : "";
-      return `#block(above: ${entryGap(index, "9pt")}, below: 0pt, breakable: false)[
+      return `#block(above: ${entryGap(index, "15pt")}, below: 0pt, breakable: false)[
   #set par(spacing: 0pt)
   #text(weight: "bold", ${quote(job.title)}) #h(1fr) #text(9pt, fill: rgb("${MUTED}"), ${quote(`${job.start} – ${job.end}`)})
   #v(3.5pt)
@@ -114,10 +125,10 @@ function experience(): string {
 function projects(): string {
   return resume.projects
     .map(
-      (project) => `#block(above: 6pt, below: 0pt, breakable: false)[
+      (project) => `#block(above: 11pt, below: 0pt, breakable: false)[
   #set par(spacing: 0pt)
   #text(weight: "bold", ${quote(project.name)}) #text(9pt, fill: rgb("${FAINT}"))[— ${link(project.href, project.displayUrl)}]
-  #v(2.5pt)
+  #v(3.5pt)
   #text(9.4pt, ${quote(project.summary)})
 ]`,
     )
@@ -127,7 +138,7 @@ function projects(): string {
 function education(): string {
   return resume.education
     .map(
-      (item, index) => `#block(above: ${entryGap(index, "7pt")}, below: 0pt, breakable: false)[
+      (item, index) => `#block(above: ${entryGap(index, "9pt")}, below: 0pt, breakable: false)[
   #set par(spacing: 0pt)
   #text(weight: "bold", ${quote(item.degree)}) #h(1fr) #text(9pt, fill: rgb("${MUTED}"), ${quote(item.end)})
   #v(3pt)
@@ -143,7 +154,9 @@ export function toTypst(): string {
   author: ${quote(resume.name)},
   keywords: (${resume.skills.flatMap((group) => group.items).map(quote).join(", ")}),
 )
-#set page(paper: "us-letter", margin: (x: 0.7in, y: 0.55in))
+// A wider text block is what buys the section spacing below. Every line that
+// ends one word short costs a whole line, and this page has no slack to spare.
+#set page(paper: "us-letter", margin: (x: 0.6in, y: 0.5in))
 #set text(
   font: ("Lato", "Carlito", "Liberation Sans"),
   size: 10pt,
@@ -166,11 +179,11 @@ export function toTypst(): string {
 // glyph advance as a word gap and extracts "EDUCATION" as "E D U C AT I O N",
 // which hides the section from an ATS.
 #let section(name) = {
-  v(10pt, weak: true)
+  v(16pt, weak: true)
   text(9pt, weight: "bold", tracking: 0.8pt, fill: rgb("${NAVY}"), upper(name))
-  v(3pt)
+  v(4pt)
   line(length: 100%, stroke: 0.6pt + rgb("${RULE}"))
-  v(6pt)
+  v(9pt)
 }
 
 ${header()}
