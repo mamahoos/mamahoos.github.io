@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.3] - 2026-08-18
+
+### Changed
+
+- Theme toggle is a `currentColor` sun SVG: filled in light, outline in dark. It stays a utility control, not a `[ ]` nav command.
+
 ## [1.2.2] - 2026-08-18
 
 ### Changed
