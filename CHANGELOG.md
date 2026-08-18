@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.1] - 2026-08-18
+
+### Changed
+
+- pgsync project copy reflects v2.0.0: GHCR Docker image, compose smoke stack, and split CI (ShellCheck/Bats on push/PR, publish on version tags).
+
 ## [1.3.0] - 2026-08-18
 
 ### Changed

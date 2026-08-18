@@ -208,7 +208,7 @@ export const resume = {
     {
       name: "pgsync",
       summary:
-        "Small wrapper around pg_dump piped to psql with rsync-shaped flags and safer defaults",
+        "One-shot pg_dump | psql sync with rsync-shaped flags, a GHCR Docker image, and ShellCheck/Bats CI through integration tests",
       href: "https://github.com/mamahoos/pgsync",
       displayUrl: "github.com/mamahoos/pgsync",
     },
