@@ -70,7 +70,7 @@ v1 verification is `astro check` and `astro build` inside the Docker image. No u
 - GitHub Actions builds in the same Docker image and deploys Pages
 - `site` is `https://mamahoos.ir` with no `base`. `resume.mamahoos.ir` and `portfolio.mamahoos.ir` are not a second site.
 - `/resume` renders from `src/data/resume.ts` with role DevOps / Platform Engineer, a short systems-practice summary (not years of employment; platform engineering is the current form of that work, not the beginning), and skills including MinIO, Argo CD, and Loki. The HTML page does not repeat the contact line; header and footer are the site chrome, and the PDF carries phone plus the full ATS contact row. A labeled practice path may appear on the HTML page only: title “How I got here”, steps through microservices and DevOps, and no year range. Wide viewports keep a hanging shell `\` after freelance; narrow viewports stack one step per line and drop the wrap mark. It must not appear in the PDF.
-- `astro build` writes a 1-page text-based `dist/resume.pdf` from the same resume data, including phone. The systems-practice summary is a left-aligned page footer, not centered under the name.
+- `astro build` writes a 1-page text-based `dist/resume.pdf` from the same resume data, including phone. The systems-practice summary is left-aligned in the body, between contact and Skills — not centered under the name, not in a page footer.
 
 ## Out of scope (v1)
 

@@ -64,6 +64,14 @@ function header(): string {
 #v(6pt)`;
 }
 
+function summary(): string {
+  return `#block(above: 0pt, below: 0pt)[
+  #set par(leading: 0.62em, justify: false)
+  #text(9.5pt, fill: rgb("${MUTED}"), ${quote(resume.summary)})
+]
+#v(6pt)`;
+}
+
 function skills(): string {
   return resume.skills
     .map(
@@ -129,16 +137,7 @@ export function toTypst(): string {
   author: ${quote(resume.name)},
   keywords: (${resume.skills.flatMap((group) => group.items).map(quote).join(", ")}),
 )
-#set page(
-  paper: "us-letter",
-  margin: (x: 0.7in, top: 0.55in, bottom: 0.95in),
-  // Left-aligned footer, not the title: the lede crowded the name.
-  footer: [
-    #set align(left)
-    #set par(leading: 0.62em, justify: false)
-    #text(8.5pt, fill: rgb("${MUTED}"), ${quote(resume.summary)})
-  ],
-)
+#set page(paper: "us-letter", margin: (x: 0.7in, y: 0.55in))
 #set text(
   font: ("Lato", "Carlito", "Liberation Sans"),
   size: 10pt,
@@ -169,6 +168,7 @@ export function toTypst(): string {
 }
 
 ${header()}
+${summary()}
 
 #section[Skills]
 ${skills()}
