@@ -1,3 +1,7 @@
+---
+const rays = [0, 45, 90, 135, 180, 225, 270, 315] as const;
+---
+
 <button
   type="button"
   class="theme-toggle"
@@ -5,13 +9,71 @@
   aria-pressed="false"
   aria-label="Color theme"
 >
-  <span aria-hidden="true">[ ○ ]</span>
+  <svg
+    class="theme-toggle__icon theme-toggle__icon--fill"
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <circle cx="12" cy="12" r="6" fill="currentColor"></circle>
+    <g
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.7"
+      stroke-linecap="round"
+    >
+      {
+        rays.map((deg) => (
+          <line
+            x1="12"
+            y1="1.55"
+            x2="12"
+            y2="4.5"
+            transform={`rotate(${deg} 12 12)`}
+          />
+        ))
+      }
+    </g>
+  </svg>
+  <svg
+    class="theme-toggle__icon theme-toggle__icon--line"
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <circle
+      cx="12"
+      cy="12"
+      r="5.25"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.7"
+    >
+    </circle>
+    <g
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.7"
+      stroke-linecap="round"
+    >
+      {
+        rays.map((deg) => (
+          <line
+            x1="12"
+            y1="1.55"
+            x2="12"
+            y2="4.5"
+            transform={`rotate(${deg} 12 12)`}
+          />
+        ))
+      }
+    </g>
+  </svg>
 </button>
 
 <script>
   const storageKey = "theme";
   const boundFlag = "__themeToggleBound";
-  const glyph = { dark: "●", light: "○" } as const;
 
   type ThemeRoot = Window & { __themeToggleBound?: boolean };
 
@@ -23,13 +85,6 @@
     return "light";
   }
 
-  function bracketGlyph(theme: "light" | "dark"): HTMLSpanElement {
-    const visual = document.createElement("span");
-    visual.setAttribute("aria-hidden", "true");
-    visual.textContent = `[ ${glyph[theme]} ]`;
-    return visual;
-  }
-
   function syncToggle(button: HTMLButtonElement, theme: "light" | "dark") {
     const isDark = theme === "dark";
     button.setAttribute("aria-pressed", isDark ? "true" : "false");
@@ -37,7 +92,6 @@
       "aria-label",
       isDark ? "Color theme: dark" : "Color theme: light",
     );
-    button.replaceChildren(bracketGlyph(theme));
   }
 
   function applyTheme(theme: "light" | "dark") {
@@ -74,6 +128,8 @@
   .theme-toggle {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
+    min-width: 2.75rem;
     min-height: 2.75rem;
     margin: 0;
     padding: 0;
@@ -81,12 +137,28 @@
     background: transparent;
     color: var(--color-foreground);
     cursor: pointer;
-    font: inherit;
-    font-family: var(--font-mono);
-    font-size: var(--text-small);
   }
 
   .theme-toggle:hover {
     color: var(--color-accent-hover);
+  }
+
+  .theme-toggle__icon {
+    display: block;
+    width: 1.125rem;
+    height: 1.125rem;
+    overflow: visible;
+  }
+
+  .theme-toggle__icon--line {
+    display: none;
+  }
+
+  :global(html[data-theme="dark"]) .theme-toggle__icon--fill {
+    display: none;
+  }
+
+  :global(html[data-theme="dark"]) .theme-toggle__icon--line {
+    display: block;
   }
 </style>

@@ -45,7 +45,7 @@ tasks/             Plan and task list
 
 ## Visual
 
-Warm paper in light mode and a slate editor surface in dark mode, with a teal accent. Chrome uses JetBrains Mono and a 1px frame. Theme defaults to light. An explicit Dark/Light control persists in `localStorage`. Decorative rules are `aria-hidden="true"`.
+Warm paper in light mode and a slate editor surface in dark mode, with a teal accent. Chrome uses JetBrains Mono and a 1px frame. Theme defaults to light. An explicit Dark/Light control persists in `localStorage`: a `currentColor` sun icon, filled in light and outline in dark. Decorative rules are `aria-hidden="true"`.
 
 ## Code Style
 
