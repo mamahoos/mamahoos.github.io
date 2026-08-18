@@ -56,26 +56,32 @@ function header(): string {
   return `#align(center)[
   #set par(spacing: 0pt)
   #text(19pt, weight: "bold", tracking: 0.2pt, fill: rgb("${NAVY}"), ${quote(resume.name)})
-  #v(8pt)
+  #v(7pt)
   #text(11pt, fill: rgb("${MUTED}"), tracking: 0.3pt, ${quote(resume.role)})
-  #v(8pt)
+  #v(7pt)
   #text(9.5pt, fill: rgb("${MUTED}"))[${contact}]
 ]
-#v(6pt)`;
+#v(8pt)
+#line(length: 100%, stroke: 0.6pt + rgb("${RULE}"))`;
 }
 
+/**
+ * The lede reads as body content, not header metadata: INK rather than MUTED,
+ * so a recruiter reads it instead of skipping it with the contact row. The
+ * rule that closes the header carries the centre-to-left transition; without
+ * it this paragraph collides with the centred block above.
+ */
 function summary(): string {
-  return `#block(above: 0pt, below: 0pt)[
-  #set par(leading: 0.62em, justify: false)
-  #text(9.5pt, fill: rgb("${MUTED}"), ${quote(resume.summary)})
-]
-#v(6pt)`;
+  return `#block(above: 10pt, below: 0pt)[
+  #set par(leading: 0.7em, justify: false)
+  #text(9.8pt, ${quote(resume.summary)})
+]`;
 }
 
 function skills(): string {
   return resume.skills
     .map(
-      (group, index) => `#block(above: ${entryGap(index, "3.5pt")}, below: 0pt)[
+      (group, index) => `#block(above: ${entryGap(index, "3pt")}, below: 0pt)[
   #set par(hanging-indent: ${SKILL_HANGING_INDENT})
   #text(weight: "bold", ${quote(`${group.label}:`)}) ${text(group.items.join(", "))}
 ]`,
@@ -108,7 +114,7 @@ function experience(): string {
 function projects(): string {
   return resume.projects
     .map(
-      (project) => `#block(above: 7pt, below: 0pt, breakable: false)[
+      (project) => `#block(above: 6pt, below: 0pt, breakable: false)[
   #set par(spacing: 0pt)
   #text(weight: "bold", ${quote(project.name)}) #text(9pt, fill: rgb("${FAINT}"))[— ${link(project.href, project.displayUrl)}]
   #v(2.5pt)
@@ -160,7 +166,7 @@ export function toTypst(): string {
 // glyph advance as a word gap and extracts "EDUCATION" as "E D U C AT I O N",
 // which hides the section from an ATS.
 #let section(name) = {
-  v(11pt, weak: true)
+  v(10pt, weak: true)
   text(9pt, weight: "bold", tracking: 0.8pt, fill: rgb("${NAVY}"), upper(name))
   v(3pt)
   line(length: 100%, stroke: 0.6pt + rgb("${RULE}"))
