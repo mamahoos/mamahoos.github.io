@@ -65,3 +65,14 @@ None for the HTML resume and PDF artifact.
 - Canonical site stays `portfolio.mamahoos.ir` on GitHub Pages (grey cloud).
 - `resume.mamahoos.ir` is a proxied CNAME plus a Cloudflare Single Redirect (301) to `/resume/`.
 - dnscontrol owns that redirect. Do not add the hostname to GitHub Pages.
+
+## Future: PDF skill extraction
+
+Deferred — see `docs/spec.md` § Future (resume PDF).
+
+- [ ] Task 9: Right-align PDF skill labels inside the fixed column
+  - Why: `pdftotext` default mode currently reads the skill gutter as two columns (all labels, then all values). Stream-order extractors and `-layout` are fine; this closes the last gap.
+  - Trade-off: ragged left edge on labels vs current clean left alignment.
+  - When: if an ATS mis-pairs labels/values, or we decide full `pdftotext` parity is worth the visual cost.
+  - Acceptance: default, `-raw`, and `-layout` all pair each label with its values; value lists still align; still one page.
+  - Files: `src/lib/resume-pdf.ts`, `docs/spec.md`

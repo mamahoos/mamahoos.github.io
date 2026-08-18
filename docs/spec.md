@@ -71,8 +71,30 @@ v1 verification is `astro check` and `astro build` inside the Docker image. No u
 - `site` is `https://mamahoos.ir` with no `base`. `resume.mamahoos.ir` and `portfolio.mamahoos.ir` are not a second site.
 - `/resume` renders from `src/data/resume.ts` with role DevOps / Platform Engineer, a short systems-practice summary (not years of employment; platform engineering is the current form of that work, not the beginning), and skills including MinIO, Argo CD, and Loki. The HTML page does not repeat the contact line; header and footer are the site chrome, and the PDF carries phone plus the full ATS contact row. A labeled practice path may appear on the HTML page only: title “How I got here”, steps through microservices and DevOps, and no year range. Wide viewports keep a hanging shell `\` after freelance; narrow viewports stack one step per line and drop the wrap mark. It must not appear in the PDF.
 - `astro build` writes a 1-page text-based `dist/resume.pdf` from the same resume data, including phone. A hairline closes the centred name/role/contact block, and the systems-practice summary sits below it in body ink, left-aligned, above Skills — not centred under the name, not in a page footer, and not in the muted grey used for contact and dates.
-- PDF skill rows put the label in a fixed left-aligned column so the value lists align as they do on the HTML page, and a wrapped row hangs under its values rather than its label. The resulting gutter makes `pdftotext` default mode read the block as two columns; this is accepted because the content stream keeps label/value order per row, so stream-order extractors and `pdftotext -layout` pair them correctly. Right-aligning labels would satisfy every mode but leaves the section ragged against the page's hard left edge.
+- PDF skill rows put the label in a fixed left-aligned column so the value lists align as they do on the HTML page, and a wrapped row hangs under its values rather than its label. The resulting gutter makes `pdftotext` default mode read the block as two columns; this is accepted because the content stream keeps label/value order per row, so stream-order extractors and `pdftotext -layout` pair them correctly.
 - The one-page budget is spent on spacing, not density: experience bullets must each fit a single line, so bullet text stays short enough for the measure rather than the gaps shrinking to fit longer text. Do not restate the company domain inside a bullet; the entry header already carries it.
+
+## Future (resume PDF)
+
+Deferred — not v1.3. Revisit if an ATS mis-pairs skill labels and values, or if we want every `pdftotext` mode to agree.
+
+**Right-aligned skill labels.** Keep the fixed label column and aligned value lists, but right-align each label inside the column and add a small gap before the value list. That collapses the gutter that makes `pdftotext` default mode treat the block as two columns (labels first, then all values). Measured threshold is ~0.9in; the longest label (`IaC & provisioning:`) is ~1.16in at 10pt bold, so a left-aligned column cannot get under the threshold without shortening labels that are themselves ATS keywords.
+
+| Mode | Left-aligned column (current) | Right-aligned labels (future) |
+| --- | --- | --- |
+| `pdftotext -raw` (PDFBox/Tika stream order) | correct | correct |
+| `pdftotext -layout` | correct | correct |
+| `pdftotext` default | labels then values | correct |
+
+Trade-off: right-aligned labels satisfy every extractor, but the section gets a ragged left edge against every other hard-left section. Current choice favours visual consistency with the rest of the page.
+
+Implementation sketch in `src/lib/resume-pdf.ts`:
+
+```typst
+#box(width: 1.4in)[#align(right)[#text(weight: "bold", label + ":")#h(6pt)]]#values
+```
+
+Acceptance when done: all three `pdftotext` modes pair each label with its value list; skill value lists still start at one x; still one page.
 
 ## Out of scope (v1)
 
