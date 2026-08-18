@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.5] - 2026-08-18
+
+### Fixed
+
+- PDF summary sits left-aligned under contact and above Skills. v1.2.4 wrongly put it in a page footer, which ATS often skips.
+
 ## [1.2.4] - 2026-08-18
 
 ### Changed
