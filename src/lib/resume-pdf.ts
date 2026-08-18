@@ -58,8 +58,6 @@ function header(): string {
   #text(19pt, weight: "bold", tracking: 0.2pt, fill: rgb("${NAVY}"), ${quote(resume.name)})
   #v(8pt)
   #text(11pt, fill: rgb("${MUTED}"), tracking: 0.3pt, ${quote(resume.role)})
-  #v(6pt)
-  #block(width: 92%)[#set par(leading: 0.68em); #text(9.5pt, ${quote(resume.summary)})]
   #v(8pt)
   #text(9.5pt, fill: rgb("${MUTED}"))[${contact}]
 ]
@@ -131,7 +129,16 @@ export function toTypst(): string {
   author: ${quote(resume.name)},
   keywords: (${resume.skills.flatMap((group) => group.items).map(quote).join(", ")}),
 )
-#set page(paper: "us-letter", margin: (x: 0.7in, y: 0.55in))
+#set page(
+  paper: "us-letter",
+  margin: (x: 0.7in, top: 0.55in, bottom: 0.95in),
+  // Left-aligned footer, not the title: the lede crowded the name.
+  footer: [
+    #set align(left)
+    #set par(leading: 0.62em, justify: false)
+    #text(8.5pt, fill: rgb("${MUTED}"), ${quote(resume.summary)})
+  ],
+)
 #set text(
   font: ("Lato", "Carlito", "Liberation Sans"),
   size: 10pt,

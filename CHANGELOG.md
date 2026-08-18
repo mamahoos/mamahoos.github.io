@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.4] - 2026-08-18
+
+### Changed
+
+- PDF summary moves out of the centered title block into a left-aligned page footer so the name and role stay clean.
+
 ## [1.2.3] - 2026-08-18
 
 ### Changed
