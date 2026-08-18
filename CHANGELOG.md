@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.6] - 2026-08-18
+
+### Changed
+
+- PDF header ends in a hairline, and the summary below it is body ink instead of the muted grey shared with contact and dates, so it reads as the first line of content rather than more metadata.
+- Section, skill, and project spacing each tighten by a point to pay for the header rule and keep the page at one.
+
 ## [1.2.5] - 2026-08-18
 
 ### Fixed
