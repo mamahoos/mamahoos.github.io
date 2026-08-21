@@ -142,7 +142,7 @@ export const resume = {
       ],
     },
     {
-      title: "Backend Developer / Junior DevOps",
+      title: "Junior DevOps / Backend Developer",
       company: "Daraei",
       domain: "fintech asset platform",
       start: "Oct 2025",
