@@ -125,7 +125,7 @@ export const resume = {
       start: "Jul 2026",
       end: "Present",
       bullets: [
-        "Operate Linux, container, and CI/CD platform infrastructure for production software delivery",
+        "Operate Linux, VMware vSphere, and CI/CD platform infrastructure for production software delivery",
         "Expand GitOps, object storage, and log pipelines with Argo CD, MinIO, and Loki alongside Prometheus and Grafana",
       ],
       technologies: [
