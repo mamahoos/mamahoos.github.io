@@ -123,7 +123,7 @@ export const resume = {
       company: "Amard",
       domain: "analytics software",
       start: "Jul 2026",
-      end: "Present",
+      end: "Sep 2026",
       bullets: [
         "Operate Linux, VMware vSphere, and CI/CD platform infrastructure for production software delivery",
         "Expand GitOps, object storage, and log pipelines with Argo CD, MinIO, and Loki alongside Prometheus and Grafana",
