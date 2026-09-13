@@ -84,7 +84,7 @@ export const resume = {
     {
       label: "Infrastructure",
       items: [
-        "Linux",
+        "Linux (Lpic2)",
         "Docker",
         "Kubernetes",
         "Docker Swarm",
