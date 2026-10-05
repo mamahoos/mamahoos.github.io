@@ -110,7 +110,7 @@ export const resume = {
     },
     {
       label: "IaC & provisioning",
-      items: ["Ansible", "Cloud-Init"],
+      items: ["Terraform", "Ansible", "Cloud-Init"],
     },
     {
       label: "Virtualization",
