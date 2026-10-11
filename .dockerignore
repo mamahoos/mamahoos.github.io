@@ -3,6 +3,7 @@
 .astro
 dist
 node_modules
+node_modules/.astro
 docs
 tasks
 .vscode
