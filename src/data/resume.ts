@@ -87,9 +87,9 @@ export const resume = {
         "Linux",
         "Docker",
         "Kubernetes",
-        "Docker Swarm",
         "Nginx",
         "Traefik",
+        "Podman",
       ],
     },
     {
