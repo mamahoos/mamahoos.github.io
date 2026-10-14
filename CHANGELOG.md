@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.4.0] - 2026-10-14
+
+### Changed
+
+- Resume languages gain Rust; infrastructure swaps Docker Swarm for Podman.
+- Amard experience closes at Sep 2026 and its operations bullet names VMware vSphere instead of the generic container platform.
+- Daraei title reads Junior DevOps / Backend Developer, the ops half first.
+
+### Fixed
+
+- `docker compose up` survives a rebuild: `.astro` gets an anonymous volume and `node_modules/.astro` is dockerignored, so the host's stale PID lock is no longer synced over the container's.
+
 ## [1.3.1] - 2026-08-18
 
 ### Changed
