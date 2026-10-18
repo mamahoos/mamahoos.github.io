@@ -79,7 +79,7 @@ export const resume = {
   skills: [
     {
       label: "Languages",
-      items: ["Python", "Bash", "Go", "Rust"],
+      items: ["Python", "Bash", "Go", "Rust", "Awk"],
     },
     {
       label: "Infrastructure",
